@@ -1,0 +1,227 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Dec 20, 2025, 7:42:03 PM
+    Author     : Shahd
+*/
+
+/* ===== STYLES FOR HOSPITAL MANAGEMENT SYSTEM ===== */
+
+/* Main Container */
+.main-container {
+    -fx-background-color: #f8f9fa;
+}
+
+/* Header */
+.header {
+    -fx-background-color: white;
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 0 0 1 0;
+}
+
+.header-title {
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 16px;
+}
+
+.user-badge {
+    -fx-background-color: #e0f7fa;
+    -fx-text-fill: #00acc1;
+    -fx-background-radius: 8px;
+    -fx-padding: 8 16 8 16;
+    -fx-font-weight: bold;
+}
+
+/* Content Area */
+.content-area {
+    -fx-background-color: #f8f9fa;
+}
+
+/* Page Title */
+.page-title {
+    -fx-text-fill: #212529;
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+}
+
+.page-subtitle {
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 16px;
+}
+
+/* Tabs */
+.tabs-container {
+    -fx-padding: 0;
+}
+
+.tab-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 2 0;
+}
+
+.tab-button:hover {
+    -fx-text-fill: #495057;
+    -fx-background-color: #f8f9fa;
+}
+
+.tab-button-active {
+    -fx-background-color: transparent;
+    -fx-text-fill: #212529;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20 10 20;
+    -fx-border-color: #212529;
+    -fx-border-width: 0 0 3 0;
+}
+
+/* Section Headers */
+.section-title {
+    -fx-text-fill: #212529;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.section-subtitle {
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 14px;
+}
+
+/* Service Cards */
+.service-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-padding: 25;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 10, 0, 0, 2);
+    -fx-border-color: #e9ecef;
+    -fx-border-width: 1;
+    -fx-border-radius: 12px;
+}
+
+.service-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 15, 0, 0, 4);
+    -fx-cursor: hand;
+}
+
+/* Icon Boxes */
+.icon-box-blue {
+    -fx-background-color: #e3f2fd;
+    -fx-background-radius: 10px;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+}
+
+.icon-box-green {
+    -fx-background-color: #e8f5e9;
+    -fx-background-radius: 10px;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+}
+
+.icon-box-purple {
+    -fx-background-color: #f3e5f5;
+    -fx-background-radius: 10px;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+}
+
+.icon-box-orange {
+    -fx-background-color: #fff3e0;
+    -fx-background-radius: 10px;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+}
+
+.icon-box-red {
+    -fx-background-color: #ffebee;
+    -fx-background-radius: 10px;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+}
+
+.icon-box-indigo {
+    -fx-background-color: #e8eaf6;
+    -fx-background-radius: 10px;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+}
+
+.icon-box-yellow {
+    -fx-background-color: #fff9c4;
+    -fx-background-radius: 10px;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+}
+
+.icon-box-pink {
+    -fx-background-color: #fce4ec;
+    -fx-background-radius: 10px;
+    -fx-min-width: 50px;
+    -fx-min-height: 50px;
+    -fx-max-width: 50px;
+    -fx-max-height: 50px;
+}
+
+.icon-text {
+    -fx-font-size: 24px;
+}
+
+/* Service Details */
+.service-name {
+    -fx-text-fill: #212529;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.service-category {
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 13px;
+}
+
+.service-description {
+    -fx-text-fill: #495057;
+    -fx-font-size: 13px;
+    -fx-wrap-text: true;
+}
+
+.preparation-label {
+    -fx-text-fill: #495057;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.preparation-text {
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 12px;
+    -fx-wrap-text: true;
+}
+
+/* Availability Badge */
+.availability-badge {
+    -fx-background-color: #f8f9fa;
+    -fx-text-fill: #495057;
+    -fx-background-radius: 6px;
+    -fx-padding: 6 12 6 12;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
