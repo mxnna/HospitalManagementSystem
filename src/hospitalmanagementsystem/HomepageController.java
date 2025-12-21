@@ -63,7 +63,7 @@ public class HomepageController implements Initializable {
     @FXML
     public void initialize() {
         // الكود اللي يتنفذ لما الصفحة تفتح
-        titleLabel.setText("about us Page");
+        titleLabel.setText("aboutPage");
     }
 }
 
@@ -80,7 +80,7 @@ public class HomepageController implements Initializable {
     @FXML
     public void initialize() {
         // الكود اللي يتنفذ لما الصفحة تفتح
-        titleLabel.setText("Appointment Page");
+        titleLabel.setText("AppointmentsPage");
     }
 }
 
@@ -95,7 +95,7 @@ public class HomepageController implements Initializable {
     @FXML
     public void initialize() {
         // الكود اللي يتنفذ لما الصفحة تفتح
-        titleLabel.setText("BillingInsurance Page");
+        titleLabel.setText("billingPage");
     }
 }
 
@@ -112,7 +112,7 @@ public class HomepageController implements Initializable {
     @FXML
     public void initialize() {
         // الكود اللي يتنفذ لما الصفحة تفتح
-        titleLabel.setText("doctor Page");
+        titleLabel.setText("doctorPage");
     }
 }
 
@@ -129,7 +129,7 @@ public class HomepageController implements Initializable {
     @FXML
     public void initialize() {
         // الكود اللي يتنفذ لما الصفحة تفتح
-        titleLabel.setText("home Page");
+        titleLabel.setText("homePage");
     }
 }
 
@@ -145,7 +145,7 @@ public class HomepageController implements Initializable {
     @FXML
     public void initialize() {
         // الكود اللي يتنفذ لما الصفحة تفتح
-        titleLabel.setText("patient Page");
+        titleLabel.setText("patientPage");
     }
 }
 
@@ -161,7 +161,7 @@ public class HomepageController implements Initializable {
     @FXML
     public void initialize() {
         // الكود اللي يتنفذ لما الصفحة تفتح
-        titleLabel.setText("service Page");
+        titleLabel.setText("servicePage");
     }
 }
 
