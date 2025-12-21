@@ -4,15 +4,23 @@
  */
 package hospitalmanagementsystem;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -22,22 +30,140 @@ import javafx.scene.layout.AnchorPane;
 public class HomepageController implements Initializable {
     
     @FXML
-    private AnchorPane login_form;
+    private Button aboutpage;
 
     @FXML
-    private Button login_loginbtn;
+    private Button appointmentspage;
 
     @FXML
-    private PasswordField login_password;
+    private Button billingpage;
 
     @FXML
-    private ComboBox<?> login_user;
+    private Button doctorpage;
 
     @FXML
-    private TextField login_username;
+    private Button homepage;
 
     @FXML
-    private AnchorPane main_form;
+    private Button patientpage;
+
+    @FXML
+    private Button servicepage;
+    
+    
+    
+    @FXML
+    public void about(ActionEvent event) throws IOException {
+            loadPage(event, "aboutUs.fxml");
+    }
+    public class AboutUSController {
+    @FXML
+    private Label titleLabel;
+    
+    @FXML
+    public void initialize() {
+        // الكود اللي يتنفذ لما الصفحة تفتح
+        titleLabel.setText("about us Page");
+    }
+}
+
+
+    
+    @FXML
+    void appointment(ActionEvent event) throws IOException {
+                    loadPage(event, "Appointment.fxml");
+    }
+    public class AppointmentsController {
+    @FXML
+    private Label titleLabel;
+    
+    @FXML
+    public void initialize() {
+        // الكود اللي يتنفذ لما الصفحة تفتح
+        titleLabel.setText("Appointment Page");
+    }
+}
+
+    @FXML
+    void billing(ActionEvent event) throws IOException{
+                            loadPage(event, "BillingInsurance.fxml");
+    }
+    public class BillingInsuranceController {
+    @FXML
+    private Label titleLabel;
+    
+    @FXML
+    public void initialize() {
+        // الكود اللي يتنفذ لما الصفحة تفتح
+        titleLabel.setText("BillingInsurance Page");
+    }
+}
+
+    
+    
+    @FXML
+    void doctor(ActionEvent event) throws IOException {
+                                    loadPage(event, "doctor.fxml");
+    }
+    public class doctorController {
+    @FXML
+    private Label titleLabel;
+    
+    @FXML
+    public void initialize() {
+        // الكود اللي يتنفذ لما الصفحة تفتح
+        titleLabel.setText("doctor Page");
+    }
+}
+
+   
+    
+    @FXML
+    void home(ActionEvent event) throws IOException{
+        loadPage(event, "homepage.fxml");
+    }
+    public class homepageController {
+    @FXML
+    private Label titleLabel;
+    
+    @FXML
+    public void initialize() {
+        // الكود اللي يتنفذ لما الصفحة تفتح
+        titleLabel.setText("home Page");
+    }
+}
+
+    
+    @FXML
+    void patient(ActionEvent event) throws IOException{
+        loadPage(event, "patient.fxml");
+    }
+    public class patientController {
+    @FXML
+    private Label titleLabel;
+    
+    @FXML
+    public void initialize() {
+        // الكود اللي يتنفذ لما الصفحة تفتح
+        titleLabel.setText("patient Page");
+    }
+}
+
+    
+    @FXML
+    void service(ActionEvent event) throws IOException{
+        loadPage(event, "service.fxml");
+    }
+    public class ServiceController {
+    @FXML
+    private Label titleLabel;
+    
+    @FXML
+    public void initialize() {
+        // الكود اللي يتنفذ لما الصفحة تفتح
+        titleLabel.setText("service Page");
+    }
+}
 
     /**
      * Initializes the controller class.
@@ -46,5 +172,12 @@ public class HomepageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    private void loadPage(ActionEvent event, String fxmlFile) throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    Scene scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
+}
     
 }
