@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="patientController" styleClass="root" 
+            stylesheets="@../design/patient.css">
+    
+    <!-- Header -->
+    <top>
+        <HBox styleClass="header" alignment="CENTER_LEFT" spacing="10">
+            <padding>
+                <Insets top="20" right="30" bottom="20" left="30"/>
+            </padding>
+            <Text text="Hospital Management System" styleClass="header-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="AU" styleClass="user-badge"/>
+        </HBox>
+    </top>
+    
+    <!-- Main Content -->
+    <center>
+        <VBox spacing="20" styleClass="main-content">
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+            
+            <!-- Page Title -->
+            <HBox alignment="CENTER_LEFT">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Text text="Patient Records" styleClass="page-title"/>
+                    <Text text="Search and manage patient information" styleClass="page-subtitle"/>
+                </VBox>
+                <Button fx:id="registerButton" text="+ Register New Patient" 
+                        styleClass="register-button" onAction="#showRegisterDialog"/>
+            </HBox>
+            
+            <!-- Search Section -->
+            <VBox styleClass="card" spacing="15">
+                <padding>
+                    <Insets top="25" right="25" bottom="25" left="25"/>
+                </padding>
+                <VBox spacing="8">
+                    <Text text="Patient Search" styleClass="section-title"/>
+                    <Text text="Search by ID, name, date of birth, or phone number" styleClass="section-subtitle"/>
+                </VBox>
+                <TextField fx:id="searchField" promptText="Search patients..." styleClass="search-field"/>
+            </VBox>
+            
+            <!-- Patient Directory -->
+            <VBox styleClass="card" VBox.vgrow="ALWAYS">
+                <padding>
+                    <Insets top="25" right="25" bottom="25" left="25"/>
+                </padding>
+                <VBox spacing="8">
+                    <Text text="Patient Directory" styleClass="section-title"/>
+                    <Text text="All registered patients" styleClass="section-subtitle"/>
+                </VBox>
+                <VBox.margin>
+                    <Insets top="10"/>
+                </VBox.margin>
+                
+                <!-- Table -->
+                <TableView fx:id="patientTable" styleClass="patient-table" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="Patient ID" prefWidth="120"/>
+                        <TableColumn fx:id="nameColumn" text="Name" prefWidth="250"/>
+                        <TableColumn fx:id="contactColumn" text="Contact" prefWidth="250"/>
+                        <TableColumn fx:id="insuranceColumn" text="Insurance" prefWidth="180"/>
+                        <TableColumn fx:id="visitColumn" text="Last Visit" prefWidth="150"/>
+                        <TableColumn fx:id="actionsColumn" text="Actions" prefWidth="150"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </VBox>
+    </center>
+</BorderPane>

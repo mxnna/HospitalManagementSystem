@@ -1,9 +1,8 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXML2.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package hospitalmanagementsystem;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,15 +27,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 
-
-
-
 /**
  *
  * @author Shahd
  */
-public class FXMLDocumentController implements Initializable {
-    
+public class FXMLDocumentController {
     @FXML
     private AnchorPane login_form;
 
@@ -105,7 +100,6 @@ public class FXMLDocumentController implements Initializable {
 
 
 
-    @Override
     public void initialize(URL url, ResourceBundle rb) {
         userList();
     }    
@@ -113,3 +107,5 @@ public class FXMLDocumentController implements Initializable {
    
     
 }
+    
+

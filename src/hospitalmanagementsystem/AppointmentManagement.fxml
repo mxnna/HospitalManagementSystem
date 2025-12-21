@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane styleClass="root" stylesheets="@../design/appointment.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="AppointmentController">
+    
+    <!-- Header -->
+    <top>
+        <VBox styleClass="header-section">
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <VBox HBox.hgrow="ALWAYS">
+                    <Label styleClass="main-title" text="Appointments Management">
+                        <font>
+                            <Font name="System Bold" size="28" />
+                        </font>
+                    </Label>
+                    <Label styleClass="subtitle" text="Schedule and manage patient appointments">
+                        <font>
+                            <Font size="14" />
+                        </font>
+                    </Label>
+                </VBox>
+                <Button fx:id="newAppointmentBtn" onAction="#handleNewAppointment" styleClass="btn-primary" text="+ New Appointment" />
+            </HBox>
+            
+            <!-- Tab Bar -->
+            <HBox spacing="30" styleClass="tab-bar">
+                <padding>
+                    <Insets bottom="10" top="20" />
+                </padding>
+                <Label styleClass="tab-active" text="List View" />
+            </HBox>
+        </VBox>
+    </top>
+    
+    <!-- Main Content -->
+    <center>
+        <VBox styleClass="content-section">
+            <!-- List Header -->
+            <HBox alignment="CENTER_LEFT" spacing="20" styleClass="list-header">
+                <VBox>
+                    <Label styleClass="section-title" text="Appointment List">
+                        <font>
+                            <Font name="System Bold" size="18" />
+                        </font>
+                    </Label>
+                    <Label styleClass="section-subtitle" text="Manage all scheduled appointments">
+                        <font>
+                            <Font size="13" />
+                        </font>
+                    </Label>
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <TextField fx:id="searchField" prefWidth="300" promptText="Search appointments..." styleClass="search-field" />
+                <ComboBox fx:id="statusFilter" prefWidth="150" promptText="All Status" styleClass="filter-combo">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="All Status" />
+                            <String fx:value="Confirmed" />
+                            <String fx:value="Scheduled" />
+                            <String fx:value="Checked-in" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </HBox>
+            
+            <!-- Table with Sample Data -->
+            <TableView fx:id="appointmentTable" styleClass="appointment-table" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="idColumn" prefWidth="120" text="Appointment ID" />
+                    <TableColumn fx:id="patientColumn" prefWidth="180" text="Patient" />
+                    <TableColumn fx:id="doctorColumn" prefWidth="150" text="Doctor" />
+                    <TableColumn fx:id="specialtyColumn" prefWidth="130" text="Specialty" />
+                    <TableColumn fx:id="dateTimeColumn" prefWidth="150" text="Date &amp; Time" />
+                    <TableColumn fx:id="statusColumn" prefWidth="120" text="Status" />
+                    <TableColumn fx:id="actionsColumn" prefWidth="150" text="Actions" />
+                </columns>
+                
+                <!-- Sample Items for Scene Builder Preview -->
+                <placeholder>
+                    <Label style="-fx-text-fill: #9ca3af; -fx-font-size: 14px;" text="No appointments scheduled" />
+                </placeholder>
+            </TableView>
+        </VBox>
+    </center>
+    
+    <!-- New Appointment Dialog (Hidden by default) -->
+    <StackPane fx:id="dialogOverlay" styleClass="dialog-overlay" visible="false">
+        <VBox maxHeight="500" maxWidth="600" spacing="15" styleClass="dialog-container">
+            <!-- Dialog Header -->
+            <HBox alignment="CENTER_LEFT">
+                <Label styleClass="dialog-title" text="Schedule New Appointment">
+                    <font>
+                        <Font name="System Bold" size="20" />
+                    </font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button fx:id="closeDialogBtn" onAction="#handleCloseDialog" styleClass="close-btn" text="✕" />
+            </HBox>
+            
+            <Label styleClass="dialog-subtitle" text="Fill in the details to create a new appointment" />
+            
+            <Separator />
+            
+            <!-- Form Fields -->
+            <VBox spacing="15" VBox.vgrow="ALWAYS">
+                <VBox spacing="5">
+                    <Label styleClass="field-label" text="Patient" />
+                    <HBox spacing="10">
+                        <TextField fx:id="patientField" promptText="Search or enter patient ID" styleClass="form-field" HBox.hgrow="ALWAYS" />
+                        <Button styleClass="search-icon-btn" text="🔍" />
+                    </HBox>
+                </VBox>
+                
+                <VBox spacing="5">
+                    <Label styleClass="field-label" text="Doctor/Specialty" />
+                    <ComboBox fx:id="doctorSpecialtyCombo" maxWidth="Infinity" promptText="Select doctor or specialty" styleClass="form-field">
+                        <items>
+                            <FXCollections fx:factory="observableArrayList">
+                                <String fx:value="Dr. Robert Smith - Cardiology" />
+                                <String fx:value="Dr. Jennifer Lee - Orthopedics" />
+                                <String fx:value="Dr. Priya Patel - Neurology" />
+                                <String fx:value="Dr. Michael Chen - Dermatology" />
+                            </FXCollections>
+                        </items>
+                    </ComboBox>
+                </VBox>
+                
+                <HBox spacing="15">
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label styleClass="field-label" text="Date" />
+                        <DatePicker fx:id="datePicker" maxWidth="Infinity" promptText="mm/dd/yyyy" styleClass="form-field" />
+                    </VBox>
+                    
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label styleClass="field-label" text="Time" />
+                        <TextField fx:id="timeField" promptText="--:-- --" styleClass="form-field" />
+                    </VBox>
+                </HBox>
+                
+                <VBox spacing="5">
+                    <Label styleClass="field-label" text="Reason for Visit" />
+                    <TextArea fx:id="reasonField" prefRowCount="3" promptText="Brief description" styleClass="form-field" />
+                </VBox>
+            </VBox>
+            
+            <!-- Dialog Actions -->
+            <HBox alignment="CENTER_RIGHT" spacing="15">
+                <padding>
+                    <Insets top="10" />
+                </padding>
+                <Button fx:id="cancelBtn" onAction="#handleCloseDialog" prefWidth="120" styleClass="btn-secondary" text="Cancel" />
+                <Button fx:id="scheduleBtn" onAction="#handleScheduleAppointment" prefWidth="180" styleClass="btn-primary" text="Schedule Appointment" />
+            </HBox>
+        </VBox>
+    </StackPane>
+    
+</BorderPane>
