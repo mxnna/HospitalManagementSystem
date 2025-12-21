@@ -17,6 +17,7 @@
 <ScrollPane fitToWidth="true"
             xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="hospitalmanagementsystem.AboutUsController"
             stylesheets="@../design/about us.css">
 
 

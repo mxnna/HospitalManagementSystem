@@ -172,12 +172,17 @@ public class HomepageController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-    private void loadPage(ActionEvent event, String fxmlFile) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
-    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-    Scene scene = new Scene(root);
-    stage.setScene(scene);
-    stage.show();
-}
-    
+    private void loadPage(ActionEvent event, String fxmlFile) {
+    try {
+        Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        System.out.println("Successfully loaded: " + fxmlFile);
+    } catch (IOException e) {
+        System.err.println("Error loading page: " + fxmlFile);
+        e.printStackTrace();
+    }
+    }
 }
