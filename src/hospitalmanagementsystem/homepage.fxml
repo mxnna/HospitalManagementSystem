@@ -2,172 +2,436 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospitalmanagementsystem.HomepageController">
-   <children> 
-      <AnchorPane prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <BorderPane layoutX="411.0" layoutY="166.0" prefHeight="600.0" prefWidth="1100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <left>
-                  <AnchorPane prefHeight="600.0" prefWidth="234.0" styleClass="main-bg" stylesheets="@../design/homepage.css" BorderPane.alignment="CENTER">
-                     <children>
-                        <AnchorPane layoutX="8.0" layoutY="27.0" prefHeight="79.0" prefWidth="216.0" AnchorPane.bottomAnchor="473.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <FontAwesomeIcon glyphName="MEDKIT" layoutX="20.0" layoutY="61.0" size="5em" />
-                              <Label layoutX="89.0" layoutY="26.0" prefHeight="26.0" prefWidth="151.0" text="VitialLink HMS" textFill="WHITE">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" layoutX="89.0" layoutY="52.0" prefHeight="19.0" prefWidth="144.0" text="Front Office Portal" textFill="#dfdbdb">
-                                 <font>
-                                    <Font name="Tahoma Bold" size="13.0" />
-                                 </font>
-                              </Label>
-                           </children>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1297.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospitalmanagementsystem.HomepageController">
+    <children> 
+        <AnchorPane minHeight="-Infinity" prefHeight="973.0" prefWidth="1100.0">
+            <children>
+                <BorderPane layoutX="411.0" layoutY="166.0" prefHeight="654.0" prefWidth="1100.0" AnchorPane.bottomAnchor="-54.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <left>
+                        <AnchorPane minHeight="-Infinity" prefHeight="899.0" prefWidth="242.0" styleClass="main-bg" stylesheets="@../design/homepage.css" BorderPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane layoutX="8.0" layoutY="27.0" prefHeight="79.0" prefWidth="216.0" AnchorPane.bottomAnchor="473.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <FontAwesomeIcon glyphName="MEDKIT" layoutX="20.0" layoutY="61.0" size="5em" />
+                                        <Label layoutX="89.0" layoutY="26.0" prefHeight="26.0" prefWidth="151.0" text="VitialLink HMS" textFill="WHITE">
+                                            <font>
+                                                <Font name="Tahoma Bold" size="20.0" />
+                                            </font>
+                                        </Label>
+                                        <Label alignment="CENTER" layoutX="89.0" layoutY="52.0" prefHeight="19.0" prefWidth="144.0" text="Front Office Portal" textFill="#dfdbdb">
+                                            <font>
+                                                <Font name="Tahoma Bold" size="13.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </AnchorPane>
+                                <Button fx:id="homepage" layoutX="14.0" layoutY="114.0" mnemonicParsing="false" onAction="#home" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="Home">
+                                    <font>
+                                        <Font name="Tahoma" size="15.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="radius" />
+                                        <String fx:value="btn-1" />
+                                        <String fx:value="btn" />
+                                        <String fx:value="nav-btn" />
+                                    </styleClass>
+                                </Button>
+                                <Button fx:id="appointmentspage" layoutX="14.0" layoutY="171.0" mnemonicParsing="false" onAction="#appointment" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="Appointments">
+                                    <font>
+                                        <Font name="Tahoma" size="15.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="radius" />
+                                        <String fx:value="btn-1" />
+                                        <String fx:value="btn" />
+                                        <String fx:value="nav-btn" />
+                                    </styleClass>
+                                </Button>
+                                <Button fx:id="doctorpage" layoutX="14.0" layoutY="225.0" mnemonicParsing="false" onAction="#doctor" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="   Doctor Management">
+                                    <font>
+                                        <Font name="Tahoma" size="15.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="radius" />
+                                        <String fx:value="btn-1" />
+                                        <String fx:value="btn" />
+                                        <String fx:value="nav-btn" />
+                                    </styleClass>
+                                </Button>
+                                <Button fx:id="patientpage" layoutX="14.0" layoutY="276.0" mnemonicParsing="false" onAction="#patient" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="Patient Records">
+                                    <font>
+                                        <Font name="Tahoma" size="15.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="radius" />
+                                        <String fx:value="btn-1" />
+                                        <String fx:value="btn" />
+                                        <String fx:value="nav-btn" />
+                                    </styleClass>
+                                </Button>
+                                <Button fx:id="servicepage" layoutX="14.0" layoutY="328.0" mnemonicParsing="false" onAction="#service" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="Services">
+                                    <font>
+                                        <Font name="Tahoma" size="15.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="radius" />
+                                        <String fx:value="btn-1" />
+                                        <String fx:value="btn" />
+                                        <String fx:value="nav-btn" />
+                                    </styleClass>
+                                </Button>
+                                <Button fx:id="billingpage" layoutX="14.0" layoutY="380.0" mnemonicParsing="false" onAction="#billing" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="   Billing &amp; Insurance">
+                                    <font>
+                                        <Font name="Tahoma" size="15.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="radius" />
+                                        <String fx:value="btn-1" />
+                                        <String fx:value="btn" />
+                                        <String fx:value="nav-btn" />
+                                    </styleClass>
+                                </Button>
+                                <Button fx:id="aboutpage" layoutX="14.0" layoutY="433.0" mnemonicParsing="false" onAction="#about" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="About Us">
+                                    <font>
+                                        <Font name="Tahoma" size="15.0" />
+                                    </font>
+                                    <styleClass>
+                                        <String fx:value="radius" />
+                                        <String fx:value="btn-1" />
+                                        <String fx:value="btn" />
+                                        <String fx:value="nav-btn" />
+                                    </styleClass>
+                                </Button>
+                                <FontAwesomeIcon fill="WHITE" glyphName="HOME" layoutX="25.0" layoutY="142.0" size="2em" />
+                                <FontAwesomeIcon fill="WHITE" glyphName="CALENDAR" layoutX="28.0" layoutY="197.0" size="1.5em" />
+                                <FontAwesomeIcon fill="WHITE" glyphName="USER_MD" layoutX="28.0" layoutY="251.0" size="1.5em" />
+                                <FontAwesomeIcon fill="WHITE" glyphName="FOLDER_OPEN" layoutX="26.0" layoutY="302.0" size="1.5em" />
+                                <FontAwesomeIcon fill="WHITE" glyphName="MEDKIT" layoutX="26.0" layoutY="354.0" size="1.5em" />
+                                <FontAwesomeIcon fill="WHITE" glyphName="CREDIT_CARD" layoutX="26.0" layoutY="406.0" size="1.5em" />
+                                <FontAwesomeIcon fill="WHITE" glyphName="INFO_CIRCLE" layoutX="28.0" layoutY="459.0" size="1.5em" />
+                                <Line endX="100.0" layoutX="113.0" layoutY="90.0" startX="-100.0" stroke="WHITE" />
+                            </children>
                         </AnchorPane>
-                        <Button fx:id="homepage" layoutX="14.0" layoutY="114.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="Home">
-                           <font>
-                              <Font name="Tahoma" size="15.0" />
-                           </font>
-                           <styleClass>
-                              <String fx:value="radius" />
-                              <String fx:value="btn-1" />
-                              <String fx:value="btn" />
-                              <String fx:value="nav-btn" />
-                           </styleClass>
-                        </Button>
-                        <Button fx:id="appointmentspage" layoutX="14.0" layoutY="171.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="Appointments">
-                           <font>
-                              <Font name="Tahoma" size="15.0" />
-                           </font>
-                           <styleClass>
-                              <String fx:value="radius" />
-                              <String fx:value="btn-1" />
-                              <String fx:value="btn" />
-                              <String fx:value="nav-btn" />
-                           </styleClass>
-                        </Button>
-                        <Button fx:id="doctorpage" layoutX="14.0" layoutY="225.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="   Doctor Management">
-                           <font>
-                              <Font name="Tahoma" size="15.0" />
-                           </font>
-                           <styleClass>
-                              <String fx:value="radius" />
-                              <String fx:value="btn-1" />
-                              <String fx:value="btn" />
-                              <String fx:value="nav-btn" />
-                           </styleClass>
-                        </Button>
-                        <Button fx:id="patientpage" layoutX="14.0" layoutY="276.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="Patient Records">
-                           <font>
-                              <Font name="Tahoma" size="15.0" />
-                           </font>
-                           <styleClass>
-                              <String fx:value="radius" />
-                              <String fx:value="btn-1" />
-                              <String fx:value="btn" />
-                              <String fx:value="nav-btn" />
-                           </styleClass>
-                        </Button>
-                        <Button fx:id="servicepage" layoutX="14.0" layoutY="328.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="Services">
-                           <font>
-                              <Font name="Tahoma" size="15.0" />
-                           </font>
-                           <styleClass>
-                              <String fx:value="radius" />
-                              <String fx:value="btn-1" />
-                              <String fx:value="btn" />
-                              <String fx:value="nav-btn" />
-                           </styleClass>
-                        </Button>
-                        <Button fx:id="billingpage" layoutX="14.0" layoutY="380.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="   Billing &amp; Insurance">
-                           <font>
-                              <Font name="Tahoma" size="15.0" />
-                           </font>
-                           <styleClass>
-                              <String fx:value="radius" />
-                              <String fx:value="btn-1" />
-                              <String fx:value="btn" />
-                              <String fx:value="nav-btn" />
-                           </styleClass>
-                        </Button>
-                        <Button fx:id="aboutpage" layoutX="14.0" layoutY="433.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="210.0" stylesheets="@../design/homepage.css" text="About Us">
-                           <font>
-                              <Font name="Tahoma" size="15.0" />
-                           </font>
-                           <styleClass>
-                              <String fx:value="radius" />
-                              <String fx:value="btn-1" />
-                              <String fx:value="btn" />
-                              <String fx:value="nav-btn" />
-                           </styleClass>
-                        </Button>
-                        <FontAwesomeIcon fill="WHITE" glyphName="HOME" layoutX="25.0" layoutY="142.0" size="2em" />
-                        <FontAwesomeIcon fill="WHITE" glyphName="CALENDAR" layoutX="28.0" layoutY="197.0" size="1.5em" />
-                        <FontAwesomeIcon fill="WHITE" glyphName="USER_MD" layoutX="28.0" layoutY="251.0" size="1.5em" />
-                        <FontAwesomeIcon fill="WHITE" glyphName="FOLDER_OPEN" layoutX="26.0" layoutY="302.0" size="1.5em" />
-                        <FontAwesomeIcon fill="WHITE" glyphName="MEDKIT" layoutX="26.0" layoutY="354.0" size="1.5em" />
-                        <FontAwesomeIcon fill="WHITE" glyphName="CREDIT_CARD" layoutX="26.0" layoutY="406.0" size="1.5em" />
-                        <FontAwesomeIcon fill="WHITE" glyphName="INFO_CIRCLE" layoutX="28.0" layoutY="459.0" size="1.5em" />
-                        <Line endX="100.0" layoutX="113.0" layoutY="90.0" startX="-100.0" stroke="WHITE" />
-                     </children>
-                  </AnchorPane>
-               </left>
-               <center>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="552.0" prefWidth="859.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <children>
-                              <AnchorPane layoutX="-1.0" prefHeight="55.0" prefWidth="860.0" styleClass="white-bg" stylesheets="@../../build/classes/design/homepage.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Label layoutX="28.0" layoutY="19.0" prefHeight="23.0" prefWidth="272.0" text="Hospital Management System" textFill="#b4aeae">
-                                       <font>
-                                          <Font name="Arial" size="20.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane layoutX="8.0" layoutY="55.0" prefHeight="600.0" prefWidth="859.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <children>
-                                    <Label layoutX="29.0" layoutY="72.0" prefHeight="22.0" prefWidth="95.0" text="Dashboard">
-                                       <font>
-                                          <Font name="Arial" size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="29.0" layoutY="94.0" text="Welcome to Hospital Management System" textFill="#b4aeae">
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
-                                    </Label>
-                                    <AnchorPane layoutX="37.0" layoutY="144.0" prefHeight="162.0" prefWidth="314.0" stylesheets="@../../build/classes/design/homepage.css">
-                                       <styleClass>
-                                          <String fx:value="shadow" />
-                                          <String fx:value="white-bg" />
-                                       </styleClass>
-                                    </AnchorPane>
-                                    <AnchorPane layoutX="368.0" layoutY="144.0" prefHeight="162.0" prefWidth="314.0" stylesheets="@../../build/classes/design/homepage.css">
-                                       <styleClass>
-                                          <String fx:value="white-bg" />
-                                          <String fx:value="shadow" />
-                                       </styleClass>
-                                    </AnchorPane>
-                                 </children>
-                              </AnchorPane>
-                           </children>
+                    </left>
+                    <center>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="1047.0" prefWidth="857.0" AnchorPane.bottomAnchor="-21.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0">
+                                    <children>
+                                        <AnchorPane layoutX="-1.0" prefHeight="55.0" prefWidth="860.0" styleClass="white-bg" stylesheets="@../../build/classes/design/homepage.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                            <children>
+                                                <Label layoutX="28.0" layoutY="19.0" prefHeight="23.0" prefWidth="272.0" text="Hospital Management System" textFill="#b4aeae">
+                                                    <font>
+                                                        <Font name="Arial" size="20.0" />
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </AnchorPane>
+                                        <AnchorPane layoutY="-4.8" minHeight="-Infinity" prefHeight="900.0" prefWidth="896.0" AnchorPane.bottomAnchor="-26.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-39.0" AnchorPane.topAnchor="-5.0">
+                                            <children>
+                                                <Label layoutX="29.0" layoutY="72.0" prefHeight="22.0" prefWidth="95.0" text="Dashboard">
+                                                    <font>
+                                                        <Font name="Arial" size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <Label layoutX="29.0" layoutY="94.0" text="Welcome to Hospital Management System" textFill="#b4aeae">
+                                                    <font>
+                                                        <Font size="18.0" />
+                                                    </font>
+                                                </Label>
+                                                <HBox alignment="CENTER_LEFT" layoutX="24.0" layoutY="136.0" prefHeight="200.0" prefWidth="816.0" spacing="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="130.0">
+                                                    <children>
+                                                        <VBox alignment="CENTER_LEFT" prefHeight="120.0" prefWidth="400.0" spacing="12.0" stylesheets="@../design/homepage.css">
+                                                            <styleClass>
+                                                                <String fx:value="dashboard-card" />
+                                                                <String fx:value="dashboard-number" />
+                                                                <String fx:value="dashboard-subtext" />
+                                                            </styleClass>
+                                                            <children>
+                                                                <HBox />
+                                                                <HBox>
+                                                                    <children>
+                                                                        <Label prefHeight="56.0" prefWidth="126.0" text="Appointments Today">
+                                                                            <font>
+                                                                                <Font size="15.0" />
+                                                                            </font>
+                                                                            <padding>
+                                                                                <Insets left="10.0" />
+                                                                            </padding>
+                                                                        </Label>
+                                                                        <FontAwesomeIcon glyphName="CALENDAR" size="2.5em" text="">
+                                                                            <HBox.margin>
+                                                                                <Insets left="10.0" top="25.0" />
+                                                                            </HBox.margin>
+                                                                        </FontAwesomeIcon>
+                                                                    </children>
+                                                                </HBox>
+                                                                <HBox />
+                                                                <Label prefHeight="18.0" prefWidth="151.0" text="24">
+                                                                    <padding>
+                                                                        <Insets left="10.0" />
+                                                                    </padding>
+                                                                    <font>
+                                                                        <Font name="System Bold" size="26.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <Label text="+3 from yesterday">
+                                                                    <padding>
+                                                                        <Insets left="10.0" />
+                                                                    </padding>
+                                                                    <font>
+                                                                        <Font name="Arial" size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                            <padding>
+                                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                            </padding>
+                                                        </VBox>
+                                                        <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="120.0" prefWidth="400.0" spacing="12.0" stylesheets="@../design/homepage.css">
+                                                            <styleClass>
+                                                                <String fx:value="dashboard-card" />
+                                                                <String fx:value="dashboard-number" />
+                                                                <String fx:value="dashboard-subtext" />
+                                                            </styleClass>
+                                                            <children>
+                                                                <HBox />
+                                                                <HBox>
+                                                                    <children>
+                                                                        <Label prefHeight="86.0" prefWidth="232.0" text="Patients Checked In">
+                                                                            <font>
+                                                                                <Font size="15.0" />
+                                                                            </font>
+                                                                            <padding>
+                                                                                <Insets left="10.0" />
+                                                                            </padding>
+                                                                        </Label>
+                                                                        <FontAwesomeIcon glyphName="USER_PLUS" size="2.5em">
+                                                                            <HBox.margin>
+                                                                                <Insets left="10.0" top="25.0" />
+                                                                            </HBox.margin>
+                                                                        </FontAwesomeIcon>
+                                                                    </children>
+                                                                </HBox>
+                                                                <HBox />
+                                                                <Label prefHeight="18.0" prefWidth="151.0" text="18">
+                                                                    <padding>
+                                                                        <Insets left="10.0" />
+                                                                    </padding>
+                                                                    <font>
+                                                                        <Font name="System Bold" size="26.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <Label text="6 pending check-in">
+                                                                    <padding>
+                                                                        <Insets left="10.0" />
+                                                                    </padding>
+                                                                    <font>
+                                                                        <Font name="Arial" size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                            <padding>
+                                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                            </padding>
+                                                        </VBox>
+                                                        <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="120.0" prefWidth="400.0" spacing="12.0" stylesheets="@../design/homepage.css">
+                                                            <styleClass>
+                                                                <String fx:value="dashboard-card" />
+                                                                <String fx:value="dashboard-number" />
+                                                                <String fx:value="dashboard-subtext" />
+                                                            </styleClass>
+                                                            <children>
+                                                                <HBox />
+                                                                <HBox>
+                                                                    <children>
+                                                                        <Label prefHeight="86.0" prefWidth="232.0" text="Doctors On Duty">
+                                                                            <font>
+                                                                                <Font size="15.0" />
+                                                                            </font>
+                                                                            <padding>
+                                                                                <Insets left="10.0" />
+                                                                            </padding>
+                                                                        </Label>
+                                                                        <FontAwesomeIcon glyphName="STETHOSCOPE" size="2.5em">
+                                                                            <HBox.margin>
+                                                                                <Insets left="10.0" top="25.0" />
+                                                                            </HBox.margin>
+                                                                        </FontAwesomeIcon>
+                                                                    </children>
+                                                                </HBox>
+                                                                <HBox />
+                                                                <Label prefHeight="18.0" prefWidth="151.0" text="12">
+                                                                    <padding>
+                                                                        <Insets left="10.0" />
+                                                                    </padding>
+                                                                    <font>
+                                                                        <Font size="26.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <Label text="3 on emergency call">
+                                                                    <padding>
+                                                                        <Insets left="10.0" />
+                                                                    </padding>
+                                                                    <font>
+                                                                        <Font name="Arial" size="14.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                            <padding>
+                                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                            </padding>
+                                                        </VBox>
+                                                        <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="120.0" prefWidth="400.0" spacing="12.0" stylesheets="@../design/homepage.css">
+                                                            <styleClass>
+                                                                <String fx:value="dashboard-card" />
+                                                                <String fx:value="dashboard-number" />
+                                                                <String fx:value="dashboard-subtext" />
+                                                            </styleClass>
+                                                            <children>
+                                                                <HBox />
+                                                                <HBox>
+                                                                    <children>
+                                                                        <Label prefHeight="86.0" prefWidth="232.0" text="Emergency Cases">
+                                                                            <font>
+                                                                                <Font size="15.0" />
+                                                                            </font>
+                                                                            <padding>
+                                                                                <Insets left="10.0" />
+                                                                            </padding>
+                                                                        </Label>
+                                                                        <FontAwesomeIcon glyphName="AMBULANCE" size="2.5em">
+                                                                            <HBox.margin>
+                                                                                <Insets left="10.0" top="25.0" />
+                                                                            </HBox.margin>
+                                                                        </FontAwesomeIcon>
+                                                                    </children>
+                                                                </HBox>
+                                                                <Label prefHeight="18.0" prefWidth="151.0" text="3">
+                                                                    <padding>
+                                                                        <Insets left="10.0" />
+                                                                    </padding>
+                                                                    <font>
+                                                                        <Font size="26.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <HBox />
+                                                            </children>
+                                                            <padding>
+                                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                            </padding>
+                                                        </VBox>
+                                                    </children>
+                                                </HBox>
+                                                <VBox layoutX="20.0" layoutY="358.0" prefHeight="200.0" prefWidth="100.0" />
+                                                <HBox layoutX="40.0" layoutY="376.0" prefHeight="270.0" prefWidth="815.0" spacing="15.0" styleClass="quick-actions-container" stylesheets="@../design/homepage.css">
+                                                    <children>
+                                                        <VBox prefHeight="269.0" prefWidth="866.0">
+                                                            <children>
+                                                                <Label prefHeight="27.0" prefWidth="126.0" styleClass="section-title" stylesheets="@../design/homepage.css" text="Quick Actions">
+                                                                    <VBox.margin>
+                                                                        <Insets left="15.0" top="15.0" />
+                                                                    </VBox.margin>
+                                                                </Label>
+                                                                <Label styleClass="section-subtitle" stylesheets="@../design/homepage.css" text="Frequently used functions">
+                                                                    <VBox.margin>
+                                                                        <Insets left="15.0" />
+                                                                    </VBox.margin>
+                                                                </Label>
+                                                                <HBox prefHeight="214.0" prefWidth="814.0" spacing="20.0">
+                                                                    <children>
+                                                                        <VBox prefHeight="90.0" prefWidth="260.0" spacing="12.0" styleClass="quick-action-card" stylesheets="@../design/homepage.css">
+                                                                            <padding>
+                                                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                                            </padding>
+                                                                            <children>
+                                                                                <FontAwesomeIcon fill="WHITE" glyphName="PLUS" size="2EM">
+                                                                                    <VBox.margin>
+                                                                                        <Insets left="100.0" top="25.0" />
+                                                                                    </VBox.margin>
+                                                                                </FontAwesomeIcon>
+                                                                                <Label text="Schedule New appointment" textFill="WHITE">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <VBox.margin>
+                                                                                        <Insets left="23.0" />
+                                                                                    </VBox.margin>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </VBox>
+                                                                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="90.0" prefWidth="260.0" spacing="12.0" styleClass="quick-action-card" stylesheets="@../design/homepage.css">
+                                                                            <padding>
+                                                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                                            </padding>
+                                                                            <children>
+                                                                                <FontAwesomeIcon fill="WHITE" glyphName="USER_PLUS" size="2em">
+                                                                                    <VBox.margin>
+                                                                                        <Insets left="100.0" top="25.0" />
+                                                                                    </VBox.margin>
+                                                                                </FontAwesomeIcon>
+                                                                                <Label prefHeight="20.0" prefWidth="112.0" text="Check-In patient" textFill="WHITE">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <VBox.margin>
+                                                                                        <Insets left="55.0" />
+                                                                                    </VBox.margin>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </VBox>
+                                                                        <VBox layoutX="10.0" layoutY="10.0" prefHeight="90.0" prefWidth="260.0" spacing="12.0" styleClass="quick-action-card" stylesheets="@../design/homepage.css">
+                                                                            <padding>
+                                                                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                                                            </padding>
+                                                                            <children>
+                                                                                <FontAwesomeIcon fill="WHITE" glyphName="SEARCH" size="2em">
+                                                                                    <VBox.margin>
+                                                                                        <Insets left="100.0" top="25.0" />
+                                                                                    </VBox.margin>
+                                                                                </FontAwesomeIcon>
+                                                                                <Label text="Search patient record" textFill="#fffefe">
+                                                                                    <font>
+                                                                                        <Font name="System Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <VBox.margin>
+                                                                                        <Insets left="50.0" />
+                                                                                    </VBox.margin>
+                                                                                </Label>
+                                                                            </children>
+                                                                        </VBox>
+                                                                    </children>
+                                                                    
+                                                                          <padding>
+                                                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                                    </padding>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                    </children>
+                                                </HBox>
+                                                
+                                                
+                                            </children>
+                                        </AnchorPane>
+                                    </children>
+                                </AnchorPane>
+                            </children>
                         </AnchorPane>
-                     </children>
-                  </AnchorPane>
-               </center>
-            </BorderPane>
-         </children>
-      </AnchorPane>
-   </children>
+                    </center>
+                </BorderPane>
+            </children>
+        </AnchorPane>
+    </children>
 </StackPane>
