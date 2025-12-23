@@ -24,13 +24,23 @@
                             <children>
                                 <VBox alignment="CENTER" spacing="6.0">
                                     <children>
-                                        <FontAwesomeIcon fill="#306090" glyphName="HEARTBEAT" size="3em" />
+                                        <FontAwesomeIcon fill="#306090" glyphName="HEARTBEAT" size="3em">
+                                            <styleClass>
+                                                <String fx:value="icon-circle" />
+                                            </styleClass>
+                                        </FontAwesomeIcon>
                                         <Label text="VitialLink Hospital" textFill="#306090">
+                                            <styleClass>
+                                                <String fx:value="login-title" />
+                                            </styleClass>
                                             <font>
                                                 <Font name="Tahoma Bold" size="28.0" />
                                             </font>
                                         </Label>
                                         <Label text="Management System" textFill="#306090">
+                                            <styleClass>
+                                                <String fx:value="login-subtitle" />
+                                            </styleClass>
                                             <font>
                                                 <Font name="Tahoma" size="14.0" />
                                             </font>
@@ -42,11 +52,17 @@
                                 <AnchorPane fx:id="login_form" prefHeight="398.0" prefWidth="332.0" stylesheets="@pagedesign.css">
                                     <children>
                                         <Label layoutX="103.0" layoutY="25.0" prefHeight="23.0" prefWidth="126.0" text="Welcome Back" textFill="#6f6f6f">
+                                            <styleClass>
+                                                <String fx:value="login-title" />
+                                            </styleClass>
                                             <font>
                                                 <Font name="Tahoma" size="18.0" />
                                             </font>
                                         </Label>
                                         <Label layoutX="74.0" layoutY="55.0" text="Sign in to your account" textFill="#6f6f6f">
+                                            <styleClass>
+                                                <String fx:value="login-subtitle" />
+                                            </styleClass>
                                             <font>
                                                 <Font name="Tahoma" size="18.0" />
                                             </font>
@@ -118,6 +134,7 @@
                                     <styleClass>
                                         <String fx:value="white-bg" />
                                         <String fx:value="radius" />
+                                        <String fx:value="login-card" />
                                     </styleClass>
                                 </AnchorPane>
                             </children>

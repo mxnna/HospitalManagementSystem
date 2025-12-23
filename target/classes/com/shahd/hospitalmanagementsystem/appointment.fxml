@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -74,12 +75,12 @@
             <!-- Table -->
             <TableView fx:id="appointmentTable" styleClass="appointment-table" VBox.vgrow="ALWAYS">
                 <columns>
-                    <TableColumn fx:id="idColumn" prefWidth="120" text="Appointment ID" />
-                    <TableColumn fx:id="patientColumn" prefWidth="180" text="Patient" />
-                    <TableColumn fx:id="doctorColumn" prefWidth="150" text="Doctor" />
-                    <TableColumn fx:id="specialtyColumn" prefWidth="130" text="Specialty" />
-                    <TableColumn fx:id="dateTimeColumn" prefWidth="150" text="Date &amp; Time" />
-                    <TableColumn fx:id="statusColumn" prefWidth="120" text="Status" />
+                    <TableColumn fx:id="idColumn" prefWidth="120" text="Appointment ID"/>
+                    <TableColumn fx:id="patientColumn" prefWidth="180" text="Patient"/>
+                    <TableColumn fx:id="doctorColumn" prefWidth="150" text="Doctor"/>
+                    <TableColumn fx:id="specialtyColumn" prefWidth="130" text="Specialty"/>
+                    <TableColumn fx:id="dateTimeColumn" prefWidth="150" text="Date &amp; Time"/>
+                    <TableColumn fx:id="statusColumn" prefWidth="120" text="Status"/>
                     <TableColumn fx:id="actionsColumn" prefWidth="150" text="Actions" />
                 </columns>
             </TableView>

@@ -108,6 +108,14 @@ public class homepageController implements Initializable {
       AnchorPane.setLeftAnchor(root, 0.0);
       AnchorPane.setRightAnchor(root, 0.0);
       AnchorPane.setBottomAnchor(root, 0.0);
+      // Make the loaded root resize with the content area
+      if (root instanceof javafx.scene.layout.Region) {
+        javafx.scene.layout.Region regionRoot = (javafx.scene.layout.Region) root;
+        regionRoot.prefWidthProperty().bind(contentArea.widthProperty());
+        regionRoot.prefHeightProperty().bind(contentArea.heightProperty());
+        regionRoot.minWidthProperty().bind(contentArea.widthProperty());
+        regionRoot.minHeightProperty().bind(contentArea.heightProperty());
+      }
       System.out.println("Successfully loaded: " + fxmlFile);
     } catch (IOException e) {
       System.err.println("Error loading page: " + fxmlFile);
@@ -126,6 +134,14 @@ public class homepageController implements Initializable {
       AnchorPane.setLeftAnchor(dashboardContent, 0.0);
       AnchorPane.setRightAnchor(dashboardContent, 0.0);
       AnchorPane.setBottomAnchor(dashboardContent, 0.0);
+      // Bind dashboard size to content area so it always fills the center
+      if (dashboardContent instanceof javafx.scene.layout.Region) {
+        javafx.scene.layout.Region region = (javafx.scene.layout.Region) dashboardContent;
+        region.prefWidthProperty().bind(contentArea.widthProperty());
+        region.prefHeightProperty().bind(contentArea.heightProperty());
+        region.minWidthProperty().bind(contentArea.widthProperty());
+        region.minHeightProperty().bind(contentArea.heightProperty());
+      }
       System.out.println("Dashboard loaded successfully");
     } catch (IOException e) {
       System.err.println("Error loading dashboard: " + e.getMessage());

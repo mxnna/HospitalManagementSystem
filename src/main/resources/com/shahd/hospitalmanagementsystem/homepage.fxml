@@ -17,7 +17,7 @@
     <children> 
         <AnchorPane minHeight="-Infinity" prefHeight="973.0" prefWidth="1100.0">
             <children>
-                <BorderPane layoutX="411.0" layoutY="166.0" prefHeight="654.0" prefWidth="1100.0" AnchorPane.bottomAnchor="-54.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <BorderPane prefHeight="654.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <left>
                         <AnchorPane minHeight="-Infinity" prefHeight="899.0" prefWidth="242.0" styleClass="main-bg" stylesheets="@homepage.css" BorderPane.alignment="CENTER">
                             <children>

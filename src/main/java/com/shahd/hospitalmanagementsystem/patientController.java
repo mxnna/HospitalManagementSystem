@@ -21,6 +21,9 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+import java.sql.*;
+
+import com.shahd.models.Patient;
 
 /**
  *
@@ -54,74 +57,164 @@ public class patientController implements Initializable {
   @FXML
   private Button registerButton;
 
-  private ObservableList<Patient> patientList;
-  private ObservableList<Patient> filteredList;
+  private ObservableList<Patient> patientList = FXCollections.observableArrayList();
+  private ObservableList<Patient> filteredList = FXCollections.observableArrayList();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    // Initialize patient data
-    initializePatientData();
+    try {
+      System.out.println("Initializing patientController...");
+      
+      // Setup table columns
+      setupTableColumns();
+      System.out.println("Table columns setup complete");
 
-    // Setup table columns
-    setupTableColumns();
+      // Load data from database
+      loadPatientsFromDb();
+      System.out.println("Patient data loaded: " + patientList.size() + " records");
 
-    // Load data into table
-    patientTable.setItems(filteredList);
+      // Bind data to table
+      filteredList.setAll(patientList);
+      patientTable.setItems(filteredList);
+      System.out.println("Table items set");
 
-    // Setup search functionality
-    setupSearch();
+      // Setup search functionality
+      setupSearch();
+      System.out.println("Search functionality setup complete");
+      
+      System.out.println("patientController initialization complete!");
+    } catch (Exception e) {
+      System.err.println("Error initializing patientController: " + e.getMessage());
+      e.printStackTrace();
+    }
   }
 
-  private void initializePatientData() {
-    patientList = FXCollections.observableArrayList(
-        new Patient("P12345", "SJ", "Sarah Johnson", "3/15/1985",
-            "(555) 123-4567", "sarah.j@email.com", "Blue Cross PPO", "10/15/2025"),
-        new Patient("P12346", "MB", "Mike Brown", "7/22/1990",
-            "(555) 234-5678", "mike.b@email.com", "Medicare", "10/10/2025"),
-        new Patient("P12347", "ED", "Emily Davis", "11/30/1978",
-            "(555) 345-6789", "emily.d@email.com", "Aetna HMO", "10/18/2025"),
-        new Patient("P12348", "JW", "James Wilson", "5/8/1965",
-            "(555) 456-7890", "james.w@email.com", "United Healthcare", "9/25/2025"),
-        new Patient("P12349", "LA", "Lisa Anderson", "1/18/1992",
-            "(555) 567-8901", "lisa.a@email.com", "Cigna PPO", "10/19/2025"));
+  private void loadPatientsFromDb() {
+    patientList.clear();
 
-    filteredList = FXCollections.observableArrayList(patientList);
+    // Try different query variations
+    String[] queries = {
+      "SELECT * FROM patients LIMIT 1000",
+      "SELECT * FROM patients WHERE is_active = TRUE LIMIT 1000"
+    };
+    
+    System.out.println("Loading patients from database...");
+
+    for (String query : queries) {
+      try (Connection conn = DatabaseConnection.getConnection();
+          Statement stmt = conn.createStatement();
+          ResultSet rs = stmt.executeQuery(query)) {
+
+        if (conn == null) {
+          System.err.println("Connection is null for query: " + query);
+          continue;
+        }
+
+        System.out.println("Executing query: " + query);
+        java.sql.ResultSetMetaData md = rs.getMetaData();
+        System.out.println("Found columns: " + md.getColumnCount());
+        
+        int count = 0;
+        while (rs.next()) {
+          String id = safeGet(rs, md, "patient_id");
+          String first = safeGet(rs, md, "first_name");
+          String last = safeGet(rs, md, "last_name");
+          String dob = safeGet(rs, md, "date_of_birth", "dob");
+          String phone = safeGet(rs, md, "phone");
+          String email = safeGet(rs, md, "email");
+          String insurance = safeGet(rs, md, "insurance_provider", "insurance");
+          String emergencyName = safeGet(rs, md, "emergency_contact_name", "emergency_contact");
+          String emergencyPhone = safeGet(rs, md, "emergency_contact_phone", "emergency_phone");
+          String lastVisit = safeGet(rs, md, "last_visit", "last_visit_date");
+
+          Patient p = new Patient(id, first, last, dob, phone, email, insurance, emergencyName, emergencyPhone, lastVisit);
+          patientList.add(p);
+          count++;
+        }
+        System.out.println("Loaded " + count + " patients from database");
+        if (count > 0) {
+          break; // Success, exit loop
+        }
+      } catch (SQLException e) {
+        System.err.println("Error with query: " + e.getMessage());
+      }
+    }
+    
+    System.out.println("Total patients in list: " + patientList.size());
+  }
+
+  private String safeGet(ResultSet rs, java.sql.ResultSetMetaData md, String... names) throws SQLException {
+    for (String n : names) {
+      try {
+        int idx = -1;
+        for (int i = 1; i <= md.getColumnCount(); i++) {
+          if (md.getColumnLabel(i).equalsIgnoreCase(n) || md.getColumnName(i).equalsIgnoreCase(n)) {
+            idx = i; break;
+          }
+        }
+        if (idx != -1) {
+          return rs.getString(idx);
+        }
+      } catch (SQLException ex) {
+        // ignore and try next
+      }
+    }
+    return "";
   }
 
   private void setupTableColumns() {
-    // Patient ID Column with Badge
-    idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+    // Patient ID Column
+    idColumn.setCellValueFactory(new PropertyValueFactory<>("patientId"));
     idColumn.setCellFactory(col -> new TableCell<Patient, String>() {
       @Override
       protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
         if (empty || item == null) {
           setGraphic(null);
+          setText(null);
         } else {
-          Patient patient = getTableView().getItems().get(getIndex());
-          HBox hbox = new HBox(10);
-          hbox.setAlignment(Pos.CENTER_LEFT);
-
-          Label badge = new Label(patient.getInitials());
-          badge.getStyleClass().add("avatar-badge");
-
-          Text idText = new Text(item);
-          idText.setStyle("-fx-font-weight: 500; -fx-fill: #1f2937;");
-
-          hbox.getChildren().addAll(badge, idText);
-          setGraphic(hbox);
+          setText(item);
+          setStyle("-fx-font-weight: 500; -fx-text-fill: #1f2937;");
         }
       }
     });
 
-    // Name Column
-    nameColumn.setCellValueFactory(new PropertyValueFactory<>("nameBox"));
+    // Name Column - display full name with DOB
+    nameColumn.setCellValueFactory(cellData -> {
+      Patient p = cellData.getValue();
+      return new javafx.beans.property.SimpleObjectProperty<>(p.getNameBox());
+    });
+    nameColumn.setCellFactory(col -> new TableCell<Patient, VBox>() {
+      @Override
+      protected void updateItem(VBox item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setGraphic(null);
+        } else {
+          setGraphic(item);
+        }
+      }
+    });
 
-    // Contact Column
-    contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactBox"));
+    // Contact Column - display phone and email
+    contactColumn.setCellValueFactory(cellData -> {
+      Patient p = cellData.getValue();
+      return new javafx.beans.property.SimpleObjectProperty<>(p.getContactBox());
+    });
+    contactColumn.setCellFactory(col -> new TableCell<Patient, VBox>() {
+      @Override
+      protected void updateItem(VBox item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || item == null) {
+          setGraphic(null);
+        } else {
+          setGraphic(item);
+        }
+      }
+    });
 
     // Insurance Column
-    insuranceColumn.setCellValueFactory(new PropertyValueFactory<>("insurance"));
+    insuranceColumn.setCellValueFactory(new PropertyValueFactory<>("insuranceProvider"));
     insuranceColumn.setCellFactory(col -> new TableCell<Patient, String>() {
       @Override
       protected void updateItem(String item, boolean empty) {
@@ -151,7 +244,18 @@ public class patientController implements Initializable {
     });
 
     // Actions Column
-    actionsColumn.setCellValueFactory(new PropertyValueFactory<>("actionButton"));
+    actionsColumn.setCellFactory(col -> new TableCell<Patient, Button>() {
+      @Override
+      protected void updateItem(Button item, boolean empty) {
+        super.updateItem(item, empty);
+        if (empty || getIndex() < 0 || getTableView().getItems().size() <= getIndex()) {
+          setGraphic(null);
+        } else {
+          Patient patient = getTableView().getItems().get(getIndex());
+          setGraphic(patient.getActionButton());
+        }
+      }
+    });
   }
 
   private void setupSearch() {
@@ -297,21 +401,31 @@ public class patientController implements Initializable {
         return;
       }
 
-      // Add patient to list
-      String initials = (firstNameField.getText().substring(0, 1) +
-          lastNameField.getText().substring(0, 1)).toUpperCase();
-      String newId = "P" + (12349 + patientList.size() + 1);
-      String fullName = firstNameField.getText() + " " + lastNameField.getText();
+      String newId = "P" + System.currentTimeMillis();
       String dob = dobPicker.getValue() != null ? dobPicker.getValue().format(DateTimeFormatter.ofPattern("M/d/yyyy"))
           : "";
 
-      Patient newPatient = new Patient(newId, initials, fullName, dob,
-          phoneField.getText(), emailField.getText(),
+      Patient newPatient = new Patient(newId,
+          firstNameField.getText(),
+          lastNameField.getText(),
+          dob,
+          phoneField.getText(),
+          emailField.getText(),
           insuranceField.getText(),
+          emergencyField.getText(),
+          "",
           LocalDate.now().format(DateTimeFormatter.ofPattern("M/d/yyyy")));
 
-      patientList.add(newPatient);
-      filteredList.add(newPatient);
+      // Persist to DB and update lists
+      try {
+        addPatientToDb(newPatient);
+        patientList.add(newPatient);
+        filteredList.add(newPatient);
+      } catch (SQLException ex) {
+        ex.printStackTrace();
+        Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to register patient: " + ex.getMessage());
+        alert.showAndWait();
+      }
 
       stage.close();
     });
@@ -323,94 +437,42 @@ public class patientController implements Initializable {
     return mainBox;
   }
 
-  // Patient Model Class
-  public static class Patient {
-    private String id;
-    private String initials;
-    private String name;
-    private String dob;
-    private String phone;
-    private String email;
-    private String insurance;
-    private String lastVisit;
+  private void addPatientToDb(Patient patient) throws SQLException {
+    String insertWithInsurance = "INSERT INTO patients (patient_id, first_name, last_name, date_of_birth, phone, email, insurance_provider, emergency_contact_name, emergency_contact_phone, last_visit, is_active) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, TRUE)";
 
-    public Patient(String id, String initials, String name, String dob,
-        String phone, String email, String insurance, String lastVisit) {
-      this.id = id;
-      this.initials = initials;
-      this.name = name;
-      this.dob = dob;
-      this.phone = phone;
-      this.email = email;
-      this.insurance = insurance;
-      this.lastVisit = lastVisit;
-    }
+    String insertFallback = "INSERT INTO patients (patient_id, first_name, last_name, date_of_birth, phone, email, last_visit, is_active) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, TRUE)";
 
-    public String getId() {
-      return id;
-    }
-
-    public String getInitials() {
-      return initials;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public String getDob() {
-      return dob;
-    }
-
-    public String getPhone() {
-      return phone;
-    }
-
-    public String getEmail() {
-      return email;
-    }
-
-    public String getInsurance() {
-      return insurance;
-    }
-
-    public String getLastVisit() {
-      return lastVisit;
-    }
-
-    public VBox getNameBox() {
-      VBox box = new VBox(4);
-      Text nameText = new Text(name);
-      nameText.setStyle("-fx-font-weight: 500; -fx-fill: #1f2937; -fx-font-size: 14px;");
-      Text dobText = new Text("DOB: " + dob);
-      dobText.setStyle("-fx-fill: #6b7280; -fx-font-size: 13px;");
-      box.getChildren().addAll(nameText, dobText);
-      return box;
-    }
-
-    public VBox getContactBox() {
-      VBox box = new VBox(4);
-      Text phoneText = new Text(phone);
-      phoneText.setStyle("-fx-fill: #1f2937; -fx-font-size: 14px;");
-      Text emailText = new Text(email);
-      emailText.setStyle("-fx-fill: #6b7280; -fx-font-size: 13px;");
-      box.getChildren().addAll(phoneText, emailText);
-      return box;
-    }
-
-    public Button getActionButton() {
-      Button btn = new Button("View Details");
-      btn.getStyleClass().add("view-details-button");
-      btn.setOnAction(e -> {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Patient Details");
-        alert.setHeaderText(name);
-        alert.setContentText("Patient ID: " + id + "\nDOB: " + dob +
-            "\nPhone: " + phone + "\nEmail: " + email +
-            "\nInsurance: " + insurance + "\nLast Visit: " + lastVisit);
-        alert.showAndWait();
-      });
-      return btn;
+    try (Connection conn = DatabaseConnection.getConnection()) {
+      try (PreparedStatement pstmt = conn.prepareStatement(insertWithInsurance)) {
+        pstmt.setString(1, patient.getPatientId());
+        pstmt.setString(2, patient.getFirstName());
+        pstmt.setString(3, patient.getLastName());
+        pstmt.setString(4, patient.getDateOfBirth());
+        pstmt.setString(5, patient.getPhone());
+        pstmt.setString(6, patient.getEmail());
+        pstmt.setString(7, patient.getInsuranceProvider());
+        pstmt.setString(8, patient.getEmergencyContactName());
+        pstmt.setString(9, patient.getEmergencyContactPhone());
+        pstmt.setString(10, patient.getLastVisit());
+        pstmt.executeUpdate();
+        return;
+      } catch (SQLException ex) {
+        // If the schema doesn't have insurance columns, try fallback insert
+        try (PreparedStatement pstmt2 = conn.prepareStatement(insertFallback)) {
+          pstmt2.setString(1, patient.getPatientId());
+          pstmt2.setString(2, patient.getFirstName());
+          pstmt2.setString(3, patient.getLastName());
+          pstmt2.setString(4, patient.getDateOfBirth());
+          pstmt2.setString(5, patient.getPhone());
+          pstmt2.setString(6, patient.getEmail());
+          pstmt2.setString(7, patient.getLastVisit());
+          pstmt2.executeUpdate();
+          return;
+        }
+      }
     }
   }
+
 }

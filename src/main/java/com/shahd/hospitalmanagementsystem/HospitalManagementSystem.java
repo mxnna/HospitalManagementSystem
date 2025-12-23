@@ -22,6 +22,7 @@ public class HospitalManagementSystem extends Application {
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("pagedesign.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("homepage.css").toExternalForm());
 
         
         stage.setScene(scene);

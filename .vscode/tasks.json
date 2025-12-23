@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run App (PowerShell)",
+      "type": "shell",
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\run-app.ps1"],
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "group": { "kind": "build", "isDefault": true
+      }
+    },
+    {
+      "label": "Maven Compile",
+      "type": "shell",
+      "command": "mvn",
+      "args": ["-q", "-DskipTests", "compile"],
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "problemMatcher": ["$maven-compile"],
+      "group": { "kind": "build", "isDefault": false }
+    },
+    {
+      "label": "Run Tests (PowerShell)",
+      "type": "shell",
+      "command": "powershell",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}\\run-tests.ps1"],
+      "presentation": { "reveal": "always", "panel": "shared" },
+      "group": "test"
+    }
+  ]
+}

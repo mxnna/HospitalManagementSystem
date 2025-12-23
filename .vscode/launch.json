@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Launch HospitalManagementSystem",
+      "request": "launch",
+      "mainClass": "com.shahd.hospitalmanagementsystem.HospitalManagementSystem",
+      "projectName": "HospitalManagementSystem",
+      "preLaunchTask": "Maven Compile",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "java",
+      "name": "Attach to Remote JVM (5005)",
+      "request": "attach",
+      "hostName": "localhost",
+      "port": 5005
+    }
+  ]
+}

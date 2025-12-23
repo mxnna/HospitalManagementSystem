@@ -6,9 +6,12 @@ package com.shahd.hospitalmanagementsystem;
 
 import com.shahd.models.Appointment;
 import java.sql.*;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
@@ -17,7 +20,7 @@ import javafx.scene.layout.StackPane;
  *
  * @author Shahd
  */
-public class AppointmentController {
+public class AppointmentController implements Initializable {
   @FXML
   private TableColumn<Appointment, String> actionsColumn;
   @FXML
@@ -61,36 +64,79 @@ public class AppointmentController {
 
   private ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
-  @FXML
-  public void initialize() {
-    // Setup table columns
-    idColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-    patientColumn.setCellValueFactory(new PropertyValueFactory<>("patientId"));
-    doctorColumn.setCellValueFactory(new PropertyValueFactory<>("doctorName"));
-    specialtyColumn.setCellValueFactory(new PropertyValueFactory<>("specialty"));
-    dateTimeColumn.setCellValueFactory(cellData -> {
-      String dateTime = cellData.getValue().getAppointmentDate() + " " +
-          cellData.getValue().getAppointmentTime();
-      return new javafx.beans.property.SimpleStringProperty(dateTime);
-    });
-    statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
+    try {
+      System.out.println("Initializing AppointmentController...");
+      
+      // Setup table columns
+      idColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+      System.out.println("idColumn setup complete");
 
-    // Hide dialog initially
-    dialogOverlay.setVisible(false);
+      // Custom patient column: show full name + patient id below it
+      patientColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPatientName()));
+      patientColumn.setCellFactory(col -> new TableCell<Appointment, String>() {
+        @Override
+        protected void updateItem(String item, boolean empty) {
+          super.updateItem(item, empty);
+          if (empty || item == null) {
+            setGraphic(null);
+          } else {
+            Appointment appt = getTableView().getItems().get(getIndex());
+            javafx.scene.layout.VBox v = new javafx.scene.layout.VBox(2);
+            javafx.scene.control.Label name = new javafx.scene.control.Label(appt.getPatientName());
+            name.getStyleClass().add("patient-name");
+            javafx.scene.control.Label id = new javafx.scene.control.Label(appt.getPatientId());
+            id.getStyleClass().add("patient-id");
+            id.setStyle("-fx-font-size: 11px; -fx-text-fill: #8f9aa6;");
+            v.getChildren().addAll(name, id);
+            setGraphic(v);
+          }
+        }
+      });
 
-    // Load doctors into combo box
-    loadDoctors();
+      doctorColumn.setCellValueFactory(new PropertyValueFactory<>("doctorName"));
+      specialtyColumn.setCellValueFactory(new PropertyValueFactory<>("specialty"));
 
-    // Setup status filter
-    setupStatusFilter();
+      // Format date/time as MM/dd/yyyy hh:mm a when possible
+      dateTimeColumn.setCellValueFactory(cellData -> {
+        String date = cellData.getValue().getAppointmentDate();
+        String time = cellData.getValue().getAppointmentTime();
+        try {
+          java.time.LocalDate d = java.time.LocalDate.parse(date);
+          java.time.LocalTime t = java.time.LocalTime.parse(time);
+          java.time.format.DateTimeFormatter fmt = java.time.format.DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
+          String formatted = java.time.LocalDateTime.of(d, t).format(fmt);
+          return new javafx.beans.property.SimpleStringProperty(formatted);
+        } catch (Exception e) {
+          return new javafx.beans.property.SimpleStringProperty(date + " " + time);
+        }
+      });
+      statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-    // Load appointments
-    refreshTable();
+      // Hide dialog initially
+      dialogOverlay.setVisible(false);
 
-    // Setup search functionality
-    searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-      filterAppointments(newValue);
-    });
+      // Load doctors into combo box
+      loadDoctors();
+
+      // Setup status filter
+      setupStatusFilter();
+
+      // Load appointments
+      refreshTable();
+      System.out.println("Appointments loaded");
+
+      // Setup search functionality
+      searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+        filterAppointments(newValue);
+      });
+      
+      System.out.println("AppointmentController initialization complete!");
+    } catch (Exception e) {
+      System.err.println("Error initializing AppointmentController: " + e.getMessage());
+      e.printStackTrace();
+    }
   }
 
   @FXML
@@ -302,6 +348,7 @@ public class AppointmentController {
     for (Appointment appointment : allAppointments) {
       if (appointment.getAppointmentId().toLowerCase().contains(searchLower) ||
           appointment.getPatientId().toLowerCase().contains(searchLower) ||
+          appointment.getPatientName().toLowerCase().contains(searchLower) ||
           appointment.getDoctorName().toLowerCase().contains(searchLower) ||
           appointment.getSpecialty().toLowerCase().contains(searchLower)) {
         filtered.add(appointment);
@@ -314,36 +361,99 @@ public class AppointmentController {
   private ObservableList<Appointment> getAllAppointments() {
     ObservableList<Appointment> appointmentList = FXCollections.observableArrayList();
 
-    String query = "SELECT a.*, u.full_name, COALESCE(dept.department_name, 'General') as department_name " +
-        "FROM appointments a " +
-        "JOIN doctors d ON a.doctor_id = d.doctor_id " +
-        "JOIN users u ON d.user_id = u.user_id " +
-        "LEFT JOIN departments dept ON d.department_id = dept.department_id " +
-        "ORDER BY a.appointment_date DESC, a.appointment_time DESC";
+    // Try different query variations
+    String[] queries = {
+      "SELECT * FROM appointments LIMIT 1000",
+      "SELECT a.*, u.full_name as doctor_name FROM appointments a LEFT JOIN doctors d ON a.doctor_id = d.doctor_id LEFT JOIN users u ON d.user_id = u.user_id LIMIT 1000"
+    };
 
-    try (Connection conn = DatabaseConnection.getConnection();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(query)) {
+    System.out.println("Loading appointments from database...");
+    
+    for (String query : queries) {
+      try (Connection conn = DatabaseConnection.getConnection();
+          Statement stmt = conn.createStatement();
+          ResultSet rs = stmt.executeQuery(query)) {
 
-      while (rs.next()) {
-        Appointment appointment = new Appointment(
-            rs.getString("appointment_id"),
-            rs.getString("patient_id"),
-            rs.getString("doctor_id"),
-            rs.getString("full_name"),
-            rs.getString("department_name"),
-            rs.getString("appointment_date"),
-            rs.getString("appointment_time"),
-            rs.getString("status"),
-            rs.getString("reason"));
-        appointmentList.add(appointment);
+        if (conn == null) {
+          System.err.println("Connection is null for query");
+          continue;
+        }
+
+        System.out.println("Executing query...");
+        java.sql.ResultSetMetaData md = rs.getMetaData();
+        System.out.println("Found columns: " + md.getColumnCount());
+
+        int count = 0;
+        while (rs.next()) {
+          try {
+            String apptId = rs.getString("appointment_id");
+            String patientId = rs.getString("patient_id");
+            String patientName = getPatientName(patientId);
+            String doctorId = rs.getString("doctor_id");
+            String doctorName = getDoctorName(doctorId);
+            String appointmentDate = rs.getString("appointment_date");
+            String appointmentTime = rs.getString("appointment_time");
+            String status = rs.getString("status");
+            String reason = rs.getString("reason");
+            
+            Appointment appointment = new Appointment(
+                apptId,
+                patientId,
+                patientName,
+                doctorId,
+                doctorName,
+                "General", // Default specialty
+                appointmentDate,
+                appointmentTime,
+                status,
+                reason);
+            appointmentList.add(appointment);
+            count++;
+          } catch (SQLException ex) {
+            System.err.println("Error processing appointment row: " + ex.getMessage());
+          }
+        }
+        System.out.println("Loaded " + count + " appointments from database");
+        if (count > 0) {
+          break; // Success, exit loop
+        }
+      } catch (SQLException e) {
+        System.err.println("Error loading appointments: " + e.getMessage());
       }
-    } catch (SQLException e) {
-      System.err.println("Error loading appointments: " + e.getMessage());
-      e.printStackTrace();
     }
 
+    System.out.println("Total appointments in list: " + appointmentList.size());
     return appointmentList;
+  }
+  
+  // Helper method to get patient name from ID
+  private String getPatientName(String patientId) {
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement("SELECT CONCAT(first_name, ' ', last_name) as full_name FROM patients WHERE patient_id = ?")) {
+      pstmt.setString(1, patientId);
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        return rs.getString("full_name");
+      }
+    } catch (SQLException e) {
+      System.err.println("Error getting patient name: " + e.getMessage());
+    }
+    return patientId;
+  }
+  
+  // Helper method to get doctor name from ID
+  private String getDoctorName(String doctorId) {
+    try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement("SELECT doctor_name FROM doctors WHERE doctor_id = ?")) {
+      pstmt.setString(1, doctorId);
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        return rs.getString("doctor_name");
+      }
+    } catch (SQLException e) {
+      System.err.println("Error getting doctor name: " + e.getMessage());
+    }
+    return doctorId;
   }
 
   private void refreshTable() {
