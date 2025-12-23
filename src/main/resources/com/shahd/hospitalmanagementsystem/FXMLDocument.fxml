@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -9,105 +10,120 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="693.0" prefWidth="912.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shahd.hospitalmanagementsystem.FXMLDocumentController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="693.0" prefWidth="912.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shahd.hospitalmanagementsystem.FXMLDocumentController">
     <children>
         <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0" styleClass="blue-bg" stylesheets="@pagedesign.css">
-            <StackPane.margin>
-                <Insets />
-            </StackPane.margin>
             <children>
-                <AnchorPane fx:id="login_form" layoutX="290.0" layoutY="188.0" prefHeight="398.0" prefWidth="332.0" stylesheets="@pagedesign.css">
+                <!-- full-size StackPane so we can center the content reliably -->
+                <StackPane prefHeight="-1" prefWidth="-1">
                     <children>
-                        <Label layoutX="103.0" layoutY="25.0" prefHeight="23.0" prefWidth="126.0" text="Welcome Back" textFill="#6f6f6f">
-                            <font>
-                                <Font name="Tahoma" size="18.0" />
-                            </font>
-                        </Label>
-                        <Label layoutX="74.0" layoutY="55.0" text="Sign in to your account" textFill="#6f6f6f">
-                            <font>
-                                <Font name="Tahoma" size="18.0" />
-                            </font>
-                        </Label>
-                  
-                        <TextField fx:id="login_username" layoutX="14.0" layoutY="138.0" prefHeight="30.0" prefWidth="290.0" promptText=" Enter your username" stylesheets="@pagedesign.css">
-                            <font>
-                                <Font name="Tahoma Bold" size="13.0" />
-                            </font>
-                            <styleClass>
-                                <String fx:value="textfield-1" />
-                                <String fx:value="white-bg" />
-                                <String fx:value="text-field" />
-                            </styleClass>
-                        </TextField>
-                        <Label layoutX="17.0" layoutY="115.0" prefHeight="20.0" prefWidth="87.0" text="Username">
-                            <font>
-                                <Font name="Tahoma Bold" size="15.0" />
-                            </font>
-                        </Label>
-                        <Label layoutX="14.0" layoutY="179.0" prefHeight="20.0" prefWidth="87.0" text="Password">
-                            <font>
-                                <Font name="Tahoma Bold" size="15.0" />
-                            </font>
-                        </Label>
-                        <TextField layoutX="14.0" layoutY="198.0" prefHeight="27.0" prefWidth="290.0" promptText="        Enter your password" stylesheets="@pagedesign.css" visible="false">
-                            <font>
-                                <Font size="13.0" />
-                            </font>
-                            <styleClass>
-                                <String fx:value="textfield-1" />
-                                <String fx:value="white-bg" />
-                            </styleClass>
-                        </TextField>
-                        <PasswordField fx:id="login_password" layoutX="14.0" layoutY="199.0" prefHeight="30.0" prefWidth="290.0" promptText=" Enter your password" stylesheets="@pagedesign.css">
-                            <styleClass>
-                                <String fx:value="textfield-1" />
-                                <String fx:value="white-bg" />
-                                <String fx:value="text-field" />
-                            </styleClass>
-                            <font>
-                                <Font name="Tahoma Bold" size="13.0" />
-                            </font>
-                        </PasswordField>
-                        <Label layoutX="17.0" layoutY="237.0" prefHeight="20.0" prefWidth="87.0" text="Role">
-                            <font>
-                                <Font name="Tahoma Bold" size="15.0" />
-                            </font>
-                        </Label>
-                        <ComboBox fx:id="login_user" layoutX="14.0" layoutY="257.0" prefHeight="35.0" prefWidth="290.0" promptText="Enter your role" stylesheets="@pagedesign.css">
-                            <styleClass>
-                                <String fx:value="radius" />
-                                <String fx:value="white-bg" />
-                                <String fx:value="btn-1" />
-                            </styleClass>
-                        </ComboBox>
-                        <Button fx:id="login_loginbtn" layoutX="17.0" layoutY="323.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="290.0" stylesheets="@pagedesign.css" text="Sign In">
-                            <styleClass>
-                                <String fx:value="btn-1" />
-                                <String fx:value="radius" />
-                            </styleClass>
-                     
-                            <font>
-                                <Font name="Tahoma" size="12.0" />
-                            </font>
-                        </Button>
+                        <VBox alignment="CENTER" spacing="18.0">
+                            <children>
+                                <VBox alignment="CENTER" spacing="6.0">
+                                    <children>
+                                        <FontAwesomeIcon fill="#306090" glyphName="HEARTBEAT" size="3em" />
+                                        <Label text="VitialLink Hospital" textFill="#306090">
+                                            <font>
+                                                <Font name="Tahoma Bold" size="28.0" />
+                                            </font>
+                                        </Label>
+                                        <Label text="Management System" textFill="#306090">
+                                            <font>
+                                                <Font name="Tahoma" size="14.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+
+                                <!-- login card (keeps original inner layout) -->
+                                <AnchorPane fx:id="login_form" prefHeight="398.0" prefWidth="332.0" stylesheets="@pagedesign.css">
+                                    <children>
+                                        <Label layoutX="103.0" layoutY="25.0" prefHeight="23.0" prefWidth="126.0" text="Welcome Back" textFill="#6f6f6f">
+                                            <font>
+                                                <Font name="Tahoma" size="18.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="74.0" layoutY="55.0" text="Sign in to your account" textFill="#6f6f6f">
+                                            <font>
+                                                <Font name="Tahoma" size="18.0" />
+                                            </font>
+                                        </Label>
+
+                                        <TextField fx:id="login_username" layoutX="14.0" layoutY="138.0" prefHeight="30.0" prefWidth="290.0" promptText=" Enter your username" stylesheets="@pagedesign.css">
+                                            <font>
+                                                <Font name="Tahoma Bold" size="13.0" />
+                                            </font>
+                                            <styleClass>
+                                                <String fx:value="textfield-1" />
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="text-field" />
+                                            </styleClass>
+                                        </TextField>
+                                        <Label layoutX="17.0" layoutY="115.0" prefHeight="20.0" prefWidth="87.0" text="Username">
+                                            <font>
+                                                <Font name="Tahoma Bold" size="15.0" />
+                                            </font>
+                                        </Label>
+                                        <FontAwesomeIcon glyphName="USER" layoutX="21.0" layoutY="160.0" size="1.5em" text="" wrappingWidth="18.142857551574707" />
+                                        <Label layoutX="14.0" layoutY="179.0" prefHeight="20.0" prefWidth="87.0" text="Password">
+                                            <font>
+                                                <Font name="Tahoma Bold" size="15.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField layoutX="14.0" layoutY="198.0" prefHeight="27.0" prefWidth="290.0" promptText="        Enter your password" stylesheets="@pagedesign.css" visible="false">
+                                            <font>
+                                                <Font size="13.0" />
+                                            </font>
+                                            <styleClass>
+                                                <String fx:value="textfield-1" />
+                                                <String fx:value="white-bg" />
+                                            </styleClass>
+                                        </TextField>
+                                        <PasswordField fx:id="login_password" layoutX="14.0" layoutY="199.0" prefHeight="30.0" prefWidth="290.0" promptText=" Enter your password" stylesheets="@pagedesign.css">
+                                            <styleClass>
+                                                <String fx:value="textfield-1" />
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="text-field" />
+                                            </styleClass>
+                                            <font>
+                                                <Font name="Tahoma Bold" size="13.0" />
+                                            </font>
+                                        </PasswordField>
+                                        <FontAwesomeIcon glyphName="LOCK" layoutX="25.0" layoutY="221.0" size="1.5em" text="" />
+                                        <Label layoutX="17.0" layoutY="237.0" prefHeight="20.0" prefWidth="87.0" text="Role">
+                                            <font>
+                                                <Font name="Tahoma Bold" size="15.0" />
+                                            </font>
+                                        </Label>
+                                        <ComboBox fx:id="login_user" layoutX="14.0" layoutY="257.0" prefHeight="35.0" prefWidth="290.0" promptText="Enter your role" stylesheets="@pagedesign.css">
+                                            <styleClass>
+                                                <String fx:value="radius" />
+                                                <String fx:value="white-bg" />
+                                                <String fx:value="btn-1" />
+                                            </styleClass>
+                                        </ComboBox>
+                                        <Button fx:id="login_loginbtn" layoutX="17.0" layoutY="323.0" mnemonicParsing="false" onAction="#login" prefHeight="35.0" prefWidth="290.0" stylesheets="@pagedesign.css" text="Sign In">
+                                            <styleClass>
+                                                <String fx:value="btn-1" />
+                                                <String fx:value="radius" />
+                                            </styleClass>
+                                            <font>
+                                                <Font name="Tahoma" size="12.0" />
+                                            </font>
+                                        </Button>
+                                    </children>
+                                    <styleClass>
+                                        <String fx:value="white-bg" />
+                                        <String fx:value="radius" />
+                                    </styleClass>
+                                </AnchorPane>
+                            </children>
+                        </VBox>
                     </children>
-                    <styleClass>
-                        <String fx:value="white-bg" />
-                        <String fx:value="radius" />
-                    </styleClass>
-                </AnchorPane>
-                <Label layoutX="327.0" layoutY="110.0" text="VitialLink Hospital" textFill="#306090">
-                    <font>
-                        <Font name="Tahoma Bold" size="28.0" />
-                    </font>
-                </Label>
-                <Label layoutX="387.0" layoutY="153.0" prefHeight="18.0" prefWidth="136.0" text="Management System" textFill="#306090">
-                    <font>
-                        <Font name="Tahoma" size="14.0" />
-                    </font>
-                </Label>
+                </StackPane>
             </children>
         </AnchorPane>
     </children>

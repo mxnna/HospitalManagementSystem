@@ -4,10 +4,18 @@
  */
 package com.shahd.hospitalmanagementsystem;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.Initializable;
+
 /**
  *
  * @author Shahd
  */
-public class BillingInController {
+public class BillingInController implements Initializable {
     
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // Initialize billing page
+    }
 }

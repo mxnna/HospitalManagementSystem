@@ -1,0 +1,19 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3307,
+            "driver": "MySQL",
+            "name": "main",
+            "username": "root",
+            "database": "mysql"
+        }
+    ]
+}

@@ -3,6 +3,51 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to c
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
 */
 /* 
+    Created on : Dec 10, 2025, 10:44:24 PM
+    Author     : Shahd
+*/
+
+.blue-bg{
+    -fx-background-color: #f0f4f8;
+}
+
+.white-bg{
+    -fx-background-color: #fff;
+}
+
+.radius{
+    -fx-background-radius: 6px;
+}
+.text-field {
+    -fx-padding: 0 0 0 28px; /* يبعد الكتابة عن الأيقونة */
+}
+.textfield-1{
+    -fx-border-color: #000;
+    -fx-border-width: .3px;
+    -fx-font-family: Tahoma;
+}
+
+.textfield-1:focused{
+    -fx-border-color: linear-gradient(to bottom right, #188ba7, #306090);
+    -fx-border-width: 1px;
+}
+
+.btn-1{
+    -fx-background-color: linear-gradient(to bottom right, #188ba7, #306090);
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 14px;
+    -fx-font-family: Arial;
+}
+
+.btn-1:hover{
+        -fx-background-color: linear-gradient(to bottom right, #11a7c9, #2765a4);
+}
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
     Created on : Dec 10, 2025, 10:44:24 PM
     Author     : Shahd
 */
@@ -45,6 +90,33 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 .btn-1:hover{
         -fx-background-color: linear-gradient(to bottom right, #11a7c9, #2765a4);
         
+}
+
+/* Login card styling */
+.login-card{
+    -fx-padding: 28px;
+    -fx-pref-width: 360px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0.0, 0, 4);
+}
+
+.icon-circle{
+    -fx-background-color: #1e73ff;
+    -fx-background-radius: 50%;
+    -fx-pref-width: 64px;
+    -fx-pref-height: 64px;
+    -fx-alignment: center;
+    -fx-text-fill: white;
+}
+
+.login-title{
+    -fx-font-size: 18px;
+    -fx-text-fill: #444444;
+    -fx-font-family: Tahoma;
+}
+
+.login-subtitle{
+    -fx-font-size: 13px;
+    -fx-text-fill: #7b7b7b;
 }
 
 

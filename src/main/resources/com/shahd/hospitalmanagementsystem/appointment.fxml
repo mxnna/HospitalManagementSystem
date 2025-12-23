@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane styleClass="root" stylesheets="@appointment.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shahd.hospitalmanagementsystem.AppointmentController">
+<BorderPane styleClass="root" stylesheets="@appointment.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shahd.hospitalmanagementsystem.AppointmentController">
     
     <!-- Header -->
     <top>

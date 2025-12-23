@@ -50,6 +50,14 @@
       <artifactId>mysql-connector-j</artifactId>
       <version>8.3.0</version>
     </dependency>
+    
+    <dependency>
+      <groupId>de.jensd</groupId>
+      <artifactId>fontawesomefx-fontawesome</artifactId>
+      <version>8.2</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/src/main/resources/lib/fontawesomefx-8.2.jar</systemPath>
+    </dependency>
   </dependencies>
 
   <build>

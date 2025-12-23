@@ -5,21 +5,23 @@
 package com.shahd.hospitalmanagementsystem;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 
 /**
  *
  * @author Shahd
  */
-public class homepageController {
+public class homepageController implements Initializable {
   @FXML
   private Button aboutpage;
 
@@ -40,25 +42,31 @@ public class homepageController {
 
   @FXML
   private Button servicepage;
+  
+  @FXML
+  private AnchorPane contentArea;
+  
+  @FXML
+  private Button logoutBtn;
+
+  @FXML
+  public void logout(ActionEvent event) throws IOException {
+    try {
+      Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+      javafx.scene.Scene scene = new javafx.scene.Scene(root);
+      javafx.stage.Stage stage = (javafx.stage.Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+      stage.setScene(scene);
+      stage.setTitle("Hospital Management System | Login");
+      System.out.println("Logged out successfully");
+    } catch (IOException e) {
+      System.err.println("Error loading login page: " + e.getMessage());
+      e.printStackTrace();
+    }
+  }
 
   @FXML
   public void about(ActionEvent event) throws IOException {
     loadPage(event, "aboutus.fxml");
-  }
-
-  private Object getScene() {
-    throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                   // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-  }
-
-  public class AboutusController {
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    public void initialize() {
-      titleLabel.setText("aboutPage");
-    }
   }
 
   @FXML
@@ -66,29 +74,9 @@ public class homepageController {
     loadPage(event, "appointment.fxml");
   }
 
-  public class AppointmentController {
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    public void initialize() {
-      titleLabel.setText("AppointmentsController");
-    }
-  }
-
   @FXML
   public void billing(ActionEvent event) throws IOException {
     loadPage(event, "BillingInsurance.fxml");
-  }
-
-  public class BillingInController {
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    public void initialize() {
-      titleLabel.setText("billingPage");
-    }
   }
 
   @FXML
@@ -96,29 +84,9 @@ public class homepageController {
     loadPage(event, "doctor.fxml");
   }
 
-  public class doctorController {
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    public void initialize() {
-      titleLabel.setText("doctoePage");
-    }
-  }
-
   @FXML
   public void home(ActionEvent event) throws IOException {
-    loadPage(event, "homepage.fxml");
-  }
-
-  public class homePageController {
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    public void initialize() {
-      titleLabel.setText("homePage");
-    }
+    loadPage(event, "dashboard.fxml");
   }
 
   @FXML
@@ -126,41 +94,41 @@ public class homepageController {
     loadPage(event, "patient.fxml");
   }
 
-  public class patientController {
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    public void initialize() {
-      titleLabel.setText("patientPage");
-    }
-  }
-
   @FXML
   public void service(ActionEvent event) throws IOException {
     loadPage(event, "service.fxml");
   }
 
-  public class serviceController {
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    public void initialize() {
-      titleLabel.setText("servicePage");
-    }
-  }
-
   private void loadPage(ActionEvent event, String fxmlFile) {
     try {
       Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
-      Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-      Scene scene = new Scene(root);
-      stage.setScene(scene);
-      stage.show();
-      System.out.println("successfuly loaded: " + fxmlFile);
+      contentArea.getChildren().clear();
+      contentArea.getChildren().add(root);
+      AnchorPane.setTopAnchor(root, 0.0);
+      AnchorPane.setLeftAnchor(root, 0.0);
+      AnchorPane.setRightAnchor(root, 0.0);
+      AnchorPane.setBottomAnchor(root, 0.0);
+      System.out.println("Successfully loaded: " + fxmlFile);
     } catch (IOException e) {
-      System.err.println("error loading page:" + fxmlFile);
+      System.err.println("Error loading page: " + fxmlFile);
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void initialize(URL url, ResourceBundle rb) {
+    // Load the default dashboard content when page initializes
+    try {
+      Parent dashboardContent = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+      contentArea.getChildren().clear();
+      contentArea.getChildren().add(dashboardContent);
+      AnchorPane.setTopAnchor(dashboardContent, 0.0);
+      AnchorPane.setLeftAnchor(dashboardContent, 0.0);
+      AnchorPane.setRightAnchor(dashboardContent, 0.0);
+      AnchorPane.setBottomAnchor(dashboardContent, 0.0);
+      System.out.println("Dashboard loaded successfully");
+    } catch (IOException e) {
+      System.err.println("Error loading dashboard: " + e.getMessage());
       e.printStackTrace();
     }
   }

@@ -82,6 +82,7 @@ public class FXMLDocumentController implements Initializable {
                         .getScene().getWindow();
 
                 Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("pagedesign.css").toExternalForm());
                 stage.setScene(scene);
                 stage.setTitle("Hospital Management System | Home page");
                 stage.setWidth(1100);

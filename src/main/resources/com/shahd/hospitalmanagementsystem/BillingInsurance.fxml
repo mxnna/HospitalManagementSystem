@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane stylesheets="@BillingInsurance.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shahd.hospitalmanagementsystem.BillingInsuranceController">
+<BorderPane stylesheets="@BillingInsurance.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shahd.hospitalmanagementsystem.BillingInController">
     
     <top>
         <VBox styleClass="header-section">
