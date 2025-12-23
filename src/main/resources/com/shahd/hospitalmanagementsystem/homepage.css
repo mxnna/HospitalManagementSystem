@@ -1,0 +1,167 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Dec 12, 2025, 11:49:22 PM
+    Author     : Shahd
+*/
+
+
+.white-bg{
+    -fx-background-color: #fff;
+}
+
+.radius{
+    -fx-background-radius: 8px;
+}
+
+.shadow{
+    -fx-effect:dropshadow(three-pass-box, rgba(0,0,0,0.5), 5,0,0,0);
+}
+
+.main-bg{
+    -fx-background-color:linear-gradient(to bottom right, #188ba7, #306090);
+}
+
+.btn{
+    -fx-background-color:linear-gradient(to bottom right, #188ba7, #306090);
+    -fx-font-family: Arial;
+    -fx-cursor: hand;
+}
+
+.btn-1:hover{
+        -fx-background-color: linear-gradient(to bottom right, #11a7c9, #2765a4);
+        
+}
+
+.nav-btn{
+    -fx-background-color:transparent;
+    -fx-cursor: hand;
+    -fx-border-color:#fff;
+    -fx-border-width:.8px;
+    -fx-text-fill:#fff;
+}
+
+.dashboard-card {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-color: #E6EAF0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 4);
+}
+
+.dashboard-number {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}
+
+.dashboard-subtext {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6B7280;
+}
+.quick-actions-container {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-border-color: #E6EAF0;
+    -fx-border-radius: 15;
+}
+
+.quick-action-card {
+    -fx-background-color: #38BDF8;
+    -fx-background-radius: 12;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+}
+
+.quick-action-card:hover {
+    -fx-background-color: #E3F2FD;
+}
+
+.quick-action-card.primary {
+    -fx-background-color: #0EA5E9;
+}
+
+.quick-action-card.primary:hover {
+    -fx-background-color: #0284C7;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #111827;
+}
+
+.section-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6B7280;
+}
+/* Section title */
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.section-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #6B7280;
+}
+
+/* Appointment card */
+.appointment-card {
+    -fx-background-color: white;
+    -fx-padding: 16;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: #E5EDF6;
+}
+
+.appointment-card:hover {
+    -fx-background-color: #F8FAFC;
+}
+
+/* Time badge */
+.time-badge {
+    -fx-background-color: #EAF6FF;
+    -fx-text-fill: #0284C7;
+    -fx-padding: 8 14;
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+}
+
+/* Text */
+.patient-name {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.doctor-info {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748B;
+}
+
+/* Status */
+.status {
+    -fx-padding: 6 12;
+    -fx-background-radius: 12;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.checked {
+    -fx-background-color: #0EA5E9;
+    -fx-text-fill: white;
+}
+
+.scheduled {
+    -fx-background-color: white;
+    -fx-border-color: #CBD5E1;
+    -fx-text-fill: #334155;
+}
+
+.confirmed {
+    -fx-background-color: #E0F2FE;
+    -fx-text-fill: #0369A1;
+}
+
