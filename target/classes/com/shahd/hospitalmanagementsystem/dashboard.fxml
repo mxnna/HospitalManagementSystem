@@ -1,29 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shahd.hospitalmanagementsystem.DashboardController" stylesheets="@dashboard.css">
     <children>
-        <AnchorPane layoutX="-1.0" prefHeight="55.0" prefWidth="860.0" styleClass="white-bg" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox spacing="18.0" styleClass="dashboard-content" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="10.0">
             <children>
-                <Label layoutX="28.0" layoutY="19.0" prefHeight="23.0" prefWidth="272.0" text="Hospital Management System" textFill="#b4aeae">
-                    <font>
-                        <Font name="Arial" size="20.0" />
-                    </font>
-                </Label>
+                <HBox spacing="16.0">
+                    <children>
+                        <VBox styleClass="dashboard-card" spacing="6.0" prefWidth="240.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Appointments Today" styleClass="widget-label" />
+                                <Label fx:id="appointmentsCount" style="-fx-font-size:28px; -fx-font-weight:bold; -fx-text-fill:#188ba7;" text="0" />
+                            </children>
+                            <padding>
+                                <Insets top="16" right="16" bottom="16" left="16" />
+                            </padding>
+                        </VBox>
+                        <VBox styleClass="dashboard-card" spacing="6.0" prefWidth="240.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Patients Checked In" styleClass="widget-label" />
+                                <Label fx:id="patientsCount" style="-fx-font-size:28px; -fx-font-weight:bold; -fx-text-fill:#188ba7;" text="0" />
+                            </children>
+                            <padding>
+                                <Insets top="16" right="16" bottom="16" left="16" />
+                            </padding>
+                        </VBox>
+                        <VBox styleClass="dashboard-card" spacing="6.0" prefWidth="240.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Doctors On Duty" styleClass="widget-label" />
+                                <Label fx:id="doctorsCount" style="-fx-font-size:28px; -fx-font-weight:bold; -fx-text-fill:#188ba7;" text="0" />
+                            </children>
+                            <padding>
+                                <Insets top="16" right="16" bottom="16" left="16" />
+                            </padding>
+                        </VBox>
+                        <VBox styleClass="dashboard-card" spacing="6.0" prefWidth="240.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Emergency Cases" styleClass="widget-label" />
+                                <Label fx:id="emergencyCount" style="-fx-font-size:28px; -fx-font-weight:bold; -fx-text-fill:#d9534f;" text="0" />
+                            </children>
+                            <padding>
+                                <Insets top="16" right="16" bottom="16" left="16" />
+                            </padding>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <HBox spacing="12.0">
+                    <children>
+                        <Button fx:id="quickNew" text="Schedule New Appointment" HBox.hgrow="ALWAYS" styleClass="primary-button" />
+                        <Button fx:id="quickCheckIn" text="Check-In Patient" HBox.hgrow="ALWAYS" styleClass="quick-action-btn" />
+                        <Button fx:id="quickSearch" text="Search Patient Record" HBox.hgrow="ALWAYS" styleClass="quick-action-btn" />
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10" bottom="10" />
+                    </VBox.margin>
+                </HBox>
+
+                <Separator />
+
+                <HBox spacing="12.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <StackPane HBox.hgrow="ALWAYS">
+                            <children>
+                                <VBox spacing="12.0">
+                                    <children>
+                                        <Label text="Recent Appointments" styleClass="section-title" />
+                                        <TableView fx:id="appointmentsTable" styleClass="data-table" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="colApptId" text="ID" prefWidth="80" />
+                                                <TableColumn fx:id="colPatient" text="Patient" prefWidth="150" />
+                                                <TableColumn fx:id="colDoctor" text="Doctor" prefWidth="150" />
+                                                <TableColumn fx:id="colTime" text="Time" prefWidth="140" />
+                                                <TableColumn fx:id="colStatus" text="Status" prefWidth="120" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                    <padding>
+                                        <Insets top="10" right="10" bottom="10" left="10" />
+                                    </padding>
+                                </VBox>
+                            </children>
+                        </StackPane>
+
+                        <StackPane HBox.hgrow="ALWAYS">
+                            <children>
+                                <VBox spacing="12.0">
+                                    <children>
+                                        <Label text="Emergency Cases" styleClass="section-title" />
+                                        <TableView fx:id="emergencyTable" styleClass="data-table" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                                <TableColumn fx:id="colCaseId" text="ID" prefWidth="80" />
+                                                <TableColumn fx:id="colCasePatient" text="Patient" prefWidth="150" />
+                                                <TableColumn fx:id="colReason" text="Reason" prefWidth="150" />
+                                                <TableColumn fx:id="colCaseTime" text="Time" prefWidth="140" />
+                                                <TableColumn fx:id="colPriority" text="Priority" prefWidth="120" />
+                                            </columns>
+                                        </TableView>
+                                    </children>
+                                    <padding>
+                                        <Insets top="10" right="10" bottom="10" left="10" />
+                                    </padding>
+                                </VBox>
+                            </children>
+                        </StackPane>
+                    </children>
+                </HBox>
             </children>
-        </AnchorPane>
-        <Label layoutX="50.0" layoutY="100.0" prefHeight="40.0" prefWidth="300.0" text="Welcome to Admin Dashboard">
-            <font>
-                <Font name="Arial" size="28.0" />
-            </font>
-        </Label>
-        <Label layoutX="50.0" layoutY="160.0" prefHeight="20.0" prefWidth="500.0" text="Select an option from the sidebar to get started">
-            <font>
-                <Font name="Arial" size="14.0" />
-            </font>
-        </Label>
+            <VBox.margin>
+                <Insets left="8" right="8" />
+            </VBox.margin>
+        </VBox>
     </children>
 </AnchorPane>

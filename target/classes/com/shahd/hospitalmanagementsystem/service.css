@@ -14,41 +14,62 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-color: #f8f9fa;
 }
 
-/* Header */
-.header {
+/* Main content card that wraps the services list */
+.main-content {
     -fx-background-color: white;
-    -fx-border-color: #e9ecef;
-    -fx-border-width: 0 0 1 0;
+    -fx-background-radius: 12px;
+    -fx-padding: 24 28 24 28;
+    -fx-border-color: #eef2f5;
+    -fx-border-width: 1;
 }
 
-.header-title {
-    -fx-text-fill: #6c757d;
+/* Header */
+.main-content {
+    -fx-background-color: transparent;
+    -fx-padding: 22;
+}
+
+.services-scroll {
+    -fx-padding: 10 0 10 0;
+}
+
+.service-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 8, 0, 0, 2);
+    -fx-padding: 14;
+}
+
+.service-card .service-name {
     -fx-font-size: 16px;
+    -fx-font-weight: 600;
 }
 
-.user-badge {
-    -fx-background-color: #e0f7fa;
-    -fx-text-fill: #00acc1;
-    -fx-background-radius: 8px;
-    -fx-padding: 8 16 8 16;
-    -fx-font-weight: bold;
+.service-card .service-category {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 12px;
 }
 
-/* Content Area */
-.content-area {
-    -fx-background-color: #f8f9fa;
+.service-card .service-desc {
+    -fx-text-fill: #374151;
+    -fx-font-size: 13px;
 }
 
-/* Page Title */
-.page-title {
-    -fx-text-fill: #212529;
-    -fx-font-size: 32px;
-    -fx-font-weight: bold;
+.availability-badge {
+    -fx-background-color: #e6ffed;
+    -fx-text-fill: #16a34a;
+    -fx-padding: 4 10 4 10;
+    -fx-background-radius: 999;
+    -fx-font-size: 11px;
 }
 
-.page-subtitle {
-    -fx-text-fill: #6c757d;
-    -fx-font-size: 16px;
+.icon-box {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 8;
+    -fx-min-width: 48;
+    -fx-min-height: 48;
+    -fx-alignment: center;
+}
 }
 
 /* Tabs */
@@ -181,11 +202,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-max-width: 50px;
     -fx-max-height: 50px;
 }
-
 .icon-text {
     -fx-font-size: 24px;
 }
-
 /* Service Details */
 .service-name {
     -fx-text-fill: #212529;
@@ -224,4 +243,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-padding: 6 12 6 12;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
+}
+
+/* Scroll area for services to keep spacing and a comfortable viewport */
+.services-scroll {
+    -fx-background-color: transparent;
+}
+
+
+.services-scroll .viewport {
+    -fx-padding: 12 0 20 0;
+    -fx-background-color: transparent;
 }

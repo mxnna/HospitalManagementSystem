@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -20,7 +21,7 @@
 <BorderPane stylesheets="@BillingInsurance.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shahd.hospitalmanagementsystem.BillingInController">
     
     <top>
-        <VBox styleClass="header-section">
+        <VBox styleClass="header-section" alignment="CENTER">
             <Label styleClass="system-title" text="Hospital Management System" />
             <Label styleClass="page-title" text="Billing &amp; Insurance" />
             <Label styleClass="page-subtitle" text="Manage payments and insurance verification" />
@@ -33,12 +34,12 @@
                 <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
             </VBox.margin>
             
-            <HBox spacing="10.0" styleClass="tab-navigation">
-                <Button fx:id="insuranceVerificationTab" onAction="#showInsuranceVerification" styleClass="tab-button, active-tab" text="Insurance Verification" />
-                <Button fx:id="processPaymentTab" onAction="#showProcessPayment" styleClass="tab-button" text="Process Payment" />
-                <Button fx:id="pendingBalancesTab" onAction="#showPendingBalances" styleClass="tab-button" text="Pending Balances" />
-                <Button fx:id="transactionHistoryTab" onAction="#showTransactionHistory" styleClass="tab-button" text="Transaction History" />
-            </HBox>
+            <HBox spacing="12.0" styleClass="tab-navigation" alignment="CENTER">
+                    <Button fx:id="insuranceVerificationTab" onAction="#showInsuranceVerification" styleClass="tab-button, active-tab" text="Insurance Verification" />
+                    <Button fx:id="processPaymentTab" onAction="#showProcessPayment" styleClass="tab-button" text="Process Payment" />
+                    <Button fx:id="pendingBalancesTab" onAction="#showPendingBalances" styleClass="tab-button" text="Pending Balances" />
+                    <Button fx:id="transactionHistoryTab" onAction="#showTransactionHistory" styleClass="tab-button" text="Transaction History" />
+                </HBox>
             
             <StackPane fx:id="contentArea" VBox.vgrow="ALWAYS">
                 

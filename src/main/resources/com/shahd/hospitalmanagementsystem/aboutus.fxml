@@ -14,7 +14,7 @@
     
 </AnchorPane>-->
 
-<ScrollPane fitToWidth="true"
+<ScrollPane fitToWidth="true" fitToHeight="false" minHeight="0" minWidth="0"
             xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.shahd.hospitalmanagementsystem.AboutusController"
@@ -22,7 +22,7 @@
 
 
     <content>
-        <VBox spacing="25" prefWidth="900"
+        <VBox spacing="25"
               style="-fx-background-color: #f5f7fb;">
             <padding>
                 <Insets top="20" right="20" bottom="20" left="20"/>

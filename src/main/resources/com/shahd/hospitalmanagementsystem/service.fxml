@@ -2,18 +2,21 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.TilePane?>
 
-<BorderPane stylesheets="@service.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="com.shahd.hospitalmanagementsystem.ServiceController" stylesheets="@service.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
     <top>
-        <VBox styleClass="header-section">
-            <Label styleClass="system-title" text="Hospital Management System" />
-            <Label styleClass="page-title" text="Service Management" />
-            <Label styleClass="page-subtitle" text="Manage hospital services and offerings" />
-        </VBox>
+        <HBox styleClass="header" alignment="CENTER_LEFT" spacing="10">
+            <padding>
+                <Insets top="20" right="30" bottom="20" left="30" />
+            </padding>
+            <Label styleClass="header-title" text="Hospital Management System" />
+        </HBox>
     </top>
 
     <center>
@@ -22,16 +25,16 @@
                 <Insets top="20.0" left="30.0" right="30.0" bottom="20.0" />
             </VBox.margin>
 
-            <Label styleClass="section-title" text="Available Services" />
+            <VBox spacing="6">
+                <Label styleClass="section-title" text="Available Medical Services" />
+                <Label styleClass="section-subtitle" text="Complete list of services offered by the hospital" />
+            </VBox>
 
-            <TableView fx:id="servicesTable" styleClass="data-table" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="serviceIdCol" prefWidth="120.0" text="Service ID" />
-                    <TableColumn fx:id="serviceNameCol" prefWidth="300.0" text="Service Name" />
-                    <TableColumn fx:id="departmentCol" prefWidth="200.0" text="Department" />
-                    <TableColumn fx:id="feeCol" prefWidth="120.0" text="Fee" />
-                </columns>
-            </TableView>
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" styleClass="services-scroll">
+                <content>
+                        <TilePane fx:id="servicesFlow" hgap="24" vgap="20" />
+                </content>
+            </ScrollPane>
         </VBox>
     </center>
 </BorderPane>

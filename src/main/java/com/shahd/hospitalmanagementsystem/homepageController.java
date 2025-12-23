@@ -96,12 +96,26 @@ public class homepageController implements Initializable {
 
   @FXML
   public void service(ActionEvent event) throws IOException {
+    System.out.println("[homepageController] Service button clicked");
     loadPage(event, "service.fxml");
   }
 
   private void loadPage(ActionEvent event, String fxmlFile) {
     try {
-      Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+      System.out.println("[homepageController] loading fxml: " + fxmlFile);
+      java.net.URL res = getClass().getResource(fxmlFile);
+      System.out.println("[homepageController] resource URL=" + res);
+      if (res == null) {
+        javafx.application.Platform.runLater(() -> {
+          javafx.scene.control.Alert a = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+          a.setHeaderText("Load error");
+          a.setContentText("FXML resource not found: " + fxmlFile);
+          a.showAndWait();
+        });
+        return;
+      }
+      FXMLLoader loader = new FXMLLoader(res);
+      Parent root = loader.load();
       contentArea.getChildren().clear();
       contentArea.getChildren().add(root);
       AnchorPane.setTopAnchor(root, 0.0);
@@ -118,8 +132,14 @@ public class homepageController implements Initializable {
       }
       System.out.println("Successfully loaded: " + fxmlFile);
     } catch (IOException e) {
-      System.err.println("Error loading page: " + fxmlFile);
+      System.err.println("Error loading page: " + fxmlFile + " -> " + e.getMessage());
       e.printStackTrace();
+      javafx.application.Platform.runLater(() -> {
+        javafx.scene.control.Alert a = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+        a.setHeaderText("Load exception");
+        a.setContentText(e.getMessage());
+        a.showAndWait();
+      });
     }
   }
 

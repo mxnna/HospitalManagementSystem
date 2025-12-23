@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="serviceCard" spacing="10" styleClass="service-card" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <padding>
+        <Insets bottom="18" left="18" right="18" top="18" />
+    </padding>
+    
+    <HBox spacing="12">
+        <VBox fx:id="iconBox" minHeight="50" minWidth="50" styleClass="icon-box-blue" style="-fx-alignment: center;">
+            <FontAwesomeIcon fx:id="serviceIcon" size="1.5em" style="-fx-text-fill: white;" />
+        </VBox>
+        
+        <VBox spacing="4">
+            <Label fx:id="serviceName" styleClass="service-name" />
+            <Label fx:id="serviceCategory" styleClass="service-category" />
+        </VBox>
+        
+        <Region HBox.hgrow="ALWAYS" />
+    </HBox>
+    
+    <Label fx:id="serviceDescription" styleClass="service-description" wrapText="true" />
+    
+    <Label styleClass="preparation-label" text="Preparation:" />
+    <Label styleClass="preparation-text" text="See department for pre-procedure instructions" wrapText="true" />
+    
+    <Label fx:id="availabilityBadge" styleClass="availability-badge" text="24/7" />
+</VBox>

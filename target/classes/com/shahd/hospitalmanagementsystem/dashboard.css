@@ -1,0 +1,203 @@
+/* Dashboard Styling - Matches Billing & Patient pages */
+
+.root {
+    -fx-background-color: #f5f5f5;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Main content area */
+.dashboard-content {
+    -fx-background-color: transparent;
+    -fx-padding: 20;
+    -fx-spacing: 18;
+}
+
+/* Dashboard Cards (Widgets) */
+.dashboard-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-padding: 20;
+    -fx-border-radius: 10;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 12, 0, 0, 3);
+}
+
+.dashboard-card Label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
+}
+
+.dashboard-card Label:nth-of-type(2) {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #188ba7;
+}
+
+/* Quick Action Buttons */
+.quick-action-btn {
+    -fx-background-color: white;
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 16 24 16 24;
+    -fx-background-radius: 8;
+    -fx-border-color: #d0d0d0;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+}
+
+.quick-action-btn:hover {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #188ba7;
+}
+
+.primary-button {
+    -fx-background-color: #188ba7;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-padding: 16 24 16 24;
+    -fx-background-radius: 8;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #11a7c9;
+}
+
+/* Section titles and subtitles */
+.section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a1a;
+}
+
+.section-subtitle {
+    -fx-font-size: 12px;
+    -fx-text-fill: #888888;
+}
+
+/* Tables */
+.data-table {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 8, 0, 0, 2);
+}
+
+.data-table .column-header {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 12 10 12 10;
+    -fx-font-weight: 600;
+    -fx-font-size: 12px;
+    -fx-text-fill: #333333;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.data-table .column-header-background {
+    -fx-background-color: #f8f9fa;
+}
+
+.data-table .table-row-cell {
+    -fx-padding: 12 10 12 10;
+    -fx-cell-size: 45px;
+    -fx-border-color: #f0f0f0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.data-table .table-row-cell:odd {
+    -fx-background-color: #ffffff;
+}
+
+.data-table .table-row-cell:even {
+    -fx-background-color: #fafafa;
+}
+
+.data-table .table-row-cell:selected {
+    -fx-background-color: #dbeafe;
+    -fx-text-fill: #1a1a1a;
+}
+
+.data-table .table-row-cell:hover {
+    -fx-background-color: #f5f5f5;
+}
+
+.data-table .table-cell {
+    -fx-padding: 8 10 8 10;
+    -fx-font-size: 12px;
+    -fx-text-fill: #333333;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.data-table .filler {
+    -fx-background-color: #f8f9fa;
+}
+
+/* Separator */
+.separator .line {
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1;
+}
+
+/* Scrollbar styling */
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #f8f8f8;
+    -fx-background-radius: 5;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #c0c0c0;
+    -fx-background-radius: 5;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #a0a0a0;
+}
+
+/* Status badges */
+.status-badge {
+    -fx-background-radius: 4;
+    -fx-padding: 3 8 3 8;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.status-confirmed {
+    -fx-background-color: #d4edda;
+    -fx-text-fill: #155724;
+}
+
+.status-pending {
+    -fx-background-color: #fff3cd;
+    -fx-text-fill: #856404;
+}
+
+.status-checked-in {
+    -fx-background-color: #cfe2ff;
+    -fx-text-fill: #084298;
+}
+
+.status-critical {
+    -fx-background-color: #f8d7da;
+    -fx-text-fill: #721c24;
+}
+
+/* HBox and VBox default spacing */
+.vbox {
+    -fx-spacing: 10;
+}
+
+.hbox {
+    -fx-spacing: 10;
+}

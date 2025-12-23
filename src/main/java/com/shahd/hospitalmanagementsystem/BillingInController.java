@@ -335,5 +335,37 @@ public class BillingInController implements Initializable {
             view.setVisible(true);
             view.setManaged(true);
         }
+
+        // Update tab button styles so only the corresponding tab shows as active
+        if (insuranceVerificationTab != null) {
+            insuranceVerificationTab.getStyleClass().remove("active-tab");
+        }
+        if (processPaymentTab != null) {
+            processPaymentTab.getStyleClass().remove("active-tab");
+        }
+        if (pendingBalancesTab != null) {
+            pendingBalancesTab.getStyleClass().remove("active-tab");
+        }
+        if (transactionHistoryTab != null) {
+            transactionHistoryTab.getStyleClass().remove("active-tab");
+        }
+
+        if (view == insuranceVerificationView && insuranceVerificationTab != null) {
+            if (!insuranceVerificationTab.getStyleClass().contains("active-tab")) {
+                insuranceVerificationTab.getStyleClass().add("active-tab");
+            }
+        } else if (view == processPaymentView && processPaymentTab != null) {
+            if (!processPaymentTab.getStyleClass().contains("active-tab")) {
+                processPaymentTab.getStyleClass().add("active-tab");
+            }
+        } else if (view == pendingBalancesView && pendingBalancesTab != null) {
+            if (!pendingBalancesTab.getStyleClass().contains("active-tab")) {
+                pendingBalancesTab.getStyleClass().add("active-tab");
+            }
+        } else if (view == transactionHistoryView && transactionHistoryTab != null) {
+            if (!transactionHistoryTab.getStyleClass().contains("active-tab")) {
+                transactionHistoryTab.getStyleClass().add("active-tab");
+            }
+        }
     }
 }

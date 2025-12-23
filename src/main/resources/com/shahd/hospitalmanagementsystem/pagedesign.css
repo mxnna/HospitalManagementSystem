@@ -99,6 +99,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0.0, 0, 4);
 }
 
+/* Ensure the login card centers its content and does not stretch awkwardly */
+.login-card {
+    -fx-alignment: CENTER;
+    -fx-pref-width: 360px;
+    -fx-max-width: 420px;
+}
+
 .icon-circle{
     -fx-background-color: #1e73ff;
     -fx-background-radius: 50%;

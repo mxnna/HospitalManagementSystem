@@ -20,6 +20,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-padding: 30 30 20 30;
     -fx-border-color: #e0e0e0;
     -fx-border-width: 0 0 1 0;
+    -fx-alignment: CENTER;
 }
 
 .system-title {
@@ -44,11 +45,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 /* Main Content */
 .main-content {
     -fx-background-color: transparent;
+    -fx-alignment: TOP_CENTER;
 }
 
 /* Tab Navigation */
 .tab-navigation {
-    -fx-padding: 0 0 10 0;
+    -fx-padding: 20 0 20 0;
+    -fx-alignment: CENTER;
+    -fx-spacing: 12;
 }
 
 .tab-button {
@@ -342,6 +346,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
+}
+
+/* ScrollPane for Billing content */
+.content-scroll {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background: transparent;
+}
+
+.content-scroll .viewport {
+    -fx-background-color: transparent;
 }
 
 .data-table .column-header {

@@ -3,6 +3,7 @@ C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\AboutusController.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\Buttons.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\homepageController.java
+C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\ServiceController.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\main.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\HospitalManagementSystem.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\Private.java
@@ -12,9 +13,11 @@ C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\AppointmentController.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\string.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\DatabaseConnection.java
+C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\models\Service.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\Users.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\models\Appointment.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\ButtonType.java
+C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\DashboardController.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\BillingInController.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\models\Patient.java
 C:\HospitalManagementSystem (3)\HospitalManagementSystem\src\main\java\com\shahd\hospitalmanagementsystem\Appointmentdataprovider.java
