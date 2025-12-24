@@ -245,7 +245,13 @@ public class DoctorManagementController implements Initializable {
             
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Add New Doctor");
-            dialogStage.setScene(new Scene(root, 600, 500));
+            Scene scene = new Scene(root);
+            try {
+                scene.getStylesheets().add(getClass().getResource("doctor.css").toExternalForm());
+            } catch (Exception ignore) {
+            }
+            dialogStage.setScene(scene);
+            dialogStage.sizeToScene();
             dialogStage.showAndWait();
             
             // Reload doctors after dialog closes

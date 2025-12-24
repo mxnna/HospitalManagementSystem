@@ -86,7 +86,6 @@
                         <String fx:value="appointment-table" />
                     </styleClass>
                     <columns>
-                        <TableColumn prefWidth="150" text="Doctor" />
                         <TableColumn fx:id="nameColumn" prefWidth="150" text="Name" />
                         <TableColumn fx:id="departmentColumn" prefWidth="120" text="Department" />
                         <TableColumn fx:id="contactColumn" prefWidth="180" text="Contact" />

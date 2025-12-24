@@ -114,11 +114,15 @@ public class AppointmentController implements Initializable {
       });
       statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-      // Hide dialog initially
-      dialogOverlay.setVisible(false);
+      // Hide dialog initially (if present)
+      if (dialogOverlay != null) {
+        dialogOverlay.setVisible(false);
+      }
 
-      // Load doctors into combo box
-      loadDoctors();
+      // Load doctors into combo box (only if control exists)
+      if (doctorSpecialtyCombo != null) {
+        loadDoctors();
+      }
 
       // Setup status filter
       setupStatusFilter();
@@ -141,16 +145,31 @@ public class AppointmentController implements Initializable {
 
   @FXML
   void handleNewAppointment(ActionEvent event) {
-    // Show the dialog overlay
-    dialogOverlay.setVisible(true);
-    clearForm();
+    // Load external dialog FXML and show as modal
+    try {
+      javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource("/com/shahd/hospitalmanagementsystem/appointment-dialog.fxml"));
+      javafx.scene.Parent root = loader.load();
+      AppointmentDialogController dialogCtrl = loader.getController();
+      dialogCtrl.setParent(this);
+
+      javafx.stage.Stage dialogStage = new javafx.stage.Stage();
+      dialogStage.setTitle("Book New Appointment");
+      dialogStage.initOwner(((javafx.scene.Node) event.getSource()).getScene().getWindow());
+      dialogStage.initModality(javafx.stage.Modality.WINDOW_MODAL);
+      dialogStage.setScene(new javafx.scene.Scene(root));
+      dialogStage.showAndWait();
+    } catch (Exception e) {
+      showAlert(Alert.AlertType.ERROR, "Error", "Failed to open appointment dialog: " + e.getMessage());
+      e.printStackTrace();
+    }
   }
 
   @FXML
   void handleCloseDialog(ActionEvent event) {
-    // Hide the dialog overlay
-    dialogOverlay.setVisible(false);
-    clearForm();
+    if (dialogOverlay != null) {
+      dialogOverlay.setVisible(false);
+      clearForm();
+    }
   }
 
   @FXML
@@ -165,9 +184,10 @@ public class AppointmentController implements Initializable {
       String appointmentId = generateAppointmentId();
 
       // Get form data
-      String patientId = patientField.getText().trim();
+      String patientInput = patientField.getText().trim();
+      String patientId = resolvePatientId(patientInput);
       String doctorSelection = doctorSpecialtyCombo.getValue();
-      String doctorId = doctorSelection.split(" - ")[0]; // Extract doctor ID
+      String doctorId = doctorSelection != null ? doctorSelection.split(" - ")[0] : null; // Extract doctor ID
       String appointmentDate = datePicker.getValue().toString();
       String appointmentTime = timeField.getText().trim() + ":00"; // Add seconds
       String reason = reasonField.getText().trim();
@@ -192,7 +212,7 @@ public class AppointmentController implements Initializable {
         if (rowsAffected > 0) {
           showAlert(Alert.AlertType.INFORMATION, "Success",
               "Appointment scheduled successfully!\nAppointment ID: " + appointmentId);
-          dialogOverlay.setVisible(false);
+          if (dialogOverlay != null) dialogOverlay.setVisible(false);
           clearForm();
           refreshTable();
         }
@@ -209,6 +229,11 @@ public class AppointmentController implements Initializable {
   }
 
   private boolean validateInputs() {
+    // If popup controls were removed, prevent scheduling via UI until popup is reimplemented
+    if (patientField == null || doctorSpecialtyCombo == null || datePicker == null || timeField == null) {
+      showAlert(Alert.AlertType.WARNING, "Not Available", "Appointment UI is temporarily removed.");
+      return false;
+    }
     if (patientField.getText().trim().isEmpty()) {
       showAlert(Alert.AlertType.WARNING, "Validation Error", "Please enter Patient ID");
       return false;
@@ -233,11 +258,12 @@ public class AppointmentController implements Initializable {
       return false;
     }
 
-    // Check if patient exists
+    // Resolve patient input to an ID (allow entering full name)
     try {
-      if (!patientExists(patientField.getText().trim())) {
+      String resolved = resolvePatientId(patientField.getText().trim());
+      if (resolved == null) {
         showAlert(Alert.AlertType.WARNING, "Validation Error",
-            "Patient ID not found in database");
+            "Patient not found in database");
         return false;
       }
     } catch (SQLException e) {
@@ -451,17 +477,64 @@ public class AppointmentController implements Initializable {
     return doctorId;
   }
 
+  // Resolve patient input (ID or full name) to a patient_id, or null if not found
+  private String resolvePatientId(String input) throws SQLException {
+    if (input == null || input.isEmpty()) return null;
+
+    try (Connection conn = DatabaseConnection.getConnection()) {
+      // Try direct patient_id match
+      try (PreparedStatement pstmt = conn.prepareStatement("SELECT patient_id FROM patients WHERE patient_id = ?")) {
+        pstmt.setString(1, input);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) return rs.getString("patient_id");
+      }
+
+      // Try exact full name match
+      try (PreparedStatement pstmt = conn.prepareStatement("SELECT patient_id FROM patients WHERE CONCAT(first_name, ' ', last_name) = ? LIMIT 1")) {
+        pstmt.setString(1, input);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) return rs.getString("patient_id");
+      }
+
+      // Try LIKE match
+      try (PreparedStatement pstmt = conn.prepareStatement("SELECT patient_id FROM patients WHERE CONCAT(first_name, ' ', last_name) LIKE ? LIMIT 1")) {
+        pstmt.setString(1, "%" + input + "%");
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) return rs.getString("patient_id");
+      }
+    }
+
+    return null;
+  }
+
   private void refreshTable() {
     allAppointments = getAllAppointments();
     appointmentTable.setItems(allAppointments);
   }
 
+  // Public wrappers for dialog controller access
+  public javafx.collections.ObservableList<String> getDoctorItems() {
+    return doctorSpecialtyCombo != null ? doctorSpecialtyCombo.getItems() : FXCollections.observableArrayList();
+  }
+
+  public String generateAppointmentIdPublic() throws SQLException {
+    return generateAppointmentId();
+  }
+
+  public String resolvePatientIdPublic(String input) throws SQLException {
+    return resolvePatientId(input);
+  }
+
+  public void refreshTablePublic() {
+    refreshTable();
+  }
+
   private void clearForm() {
-    patientField.clear();
-    doctorSpecialtyCombo.setValue(null);
-    datePicker.setValue(null);
-    timeField.clear();
-    reasonField.clear();
+    if (patientField != null) patientField.clear();
+    if (doctorSpecialtyCombo != null) doctorSpecialtyCombo.setValue(null);
+    if (datePicker != null) datePicker.setValue(null);
+    if (timeField != null) timeField.clear();
+    if (reasonField != null) reasonField.clear();
   }
 
   private void showAlert(Alert.AlertType alertType, String title, String message) {

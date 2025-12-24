@@ -35,9 +35,11 @@ com\shahd\hospitalmanagementsystem\BillingInController$7.class
 com\shahd\hospitalmanagementsystem\App.class
 com\shahd\models\Doctor.class
 com\shahd\hospitalmanagementsystem\patientController$2.class
+com\shahd\hospitalmanagementsystem\PatientDialogController.class
 com\shahd\models\Service.class
 com\shahd\hospitalmanagementsystem\AppointmentController.class
 com\shahd\hospitalmanagementsystem\HospitalManagementSystem.class
+com\shahd\hospitalmanagementsystem\AppointmentDialogController.class
 com\shahd\hospitalmanagementsystem\patientController$5.class
 com\shahd\models\Appointment.class
 com\shahd\models\Transaction.class

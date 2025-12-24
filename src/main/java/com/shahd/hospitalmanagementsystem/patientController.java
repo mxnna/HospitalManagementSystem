@@ -5,7 +5,9 @@
 package com.shahd.hospitalmanagementsystem;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -276,18 +278,27 @@ public class patientController implements Initializable {
 
   @FXML
   private void showRegisterDialog() {
-    Stage dialogStage = new Stage();
-    dialogStage.initModality(Modality.APPLICATION_MODAL);
-    dialogStage.setTitle("Register New Patient");
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/shahd/hospitalmanagementsystem/patient-dialog.fxml"));
+      Parent root = loader.load();
 
-    // Create dialog content
-    VBox dialogContent = createRegisterDialog(dialogStage);
+      PatientDialogController controller = loader.getController();
+      controller.setParent(this);
 
-    Scene scene = new Scene(dialogContent, 720, 700);
-    scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-
-    dialogStage.setScene(scene);
-    dialogStage.showAndWait();
+      Stage dialogStage = new Stage();
+      dialogStage.initModality(Modality.WINDOW_MODAL);
+      if (registerButton != null && registerButton.getScene() != null) {
+        dialogStage.initOwner(registerButton.getScene().getWindow());
+      }
+      dialogStage.setTitle("Register New Patient");
+      Scene scene = new Scene(root);
+      dialogStage.setScene(scene);
+      dialogStage.showAndWait();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      Alert alert = new Alert(Alert.AlertType.ERROR, "Failed to open register dialog: " + ex.getMessage());
+      alert.showAndWait();
+    }
   }
 
   private VBox createRegisterDialog(Stage stage) {
@@ -432,7 +443,7 @@ public class patientController implements Initializable {
     return mainBox;
   }
 
-  private void addPatientToDb(Patient patient) throws SQLException {
+  public void addPatientToDb(Patient patient) throws SQLException {
     String insertWithInsurance = "INSERT INTO patients (patient_id, first_name, last_name, date_of_birth, phone, email, insurance_provider, emergency_contact_name, emergency_contact_phone, last_visit, is_active) " +
         "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, TRUE)";
 
@@ -468,6 +479,11 @@ public class patientController implements Initializable {
         }
       }
     }
+  }
+
+  public void addPatientToLists(Patient patient) {
+    patientList.add(patient);
+    filteredList.add(patient);
   }
 
 }

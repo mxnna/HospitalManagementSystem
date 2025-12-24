@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import java.lang.String?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -10,6 +11,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -87,66 +89,6 @@
         </VBox>
     </center>
     
-    <!-- New Appointment Dialog (Hidden by default) -->
-    <StackPane fx:id="dialogOverlay" styleClass="dialog-overlay" visible="false">
-        <VBox maxHeight="500" maxWidth="600" spacing="15" styleClass="dialog-container">
-            <!-- Dialog Header -->
-            <HBox alignment="CENTER_LEFT">
-                <Label styleClass="dialog-title" text="Schedule New Appointment">
-                    <font>
-                        <Font name="System Bold" size="20" />
-                    </font>
-                </Label>
-                <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="closeDialogBtn" onAction="#handleCloseDialog" styleClass="close-btn" text="✕" />
-            </HBox>
-            
-            <Label styleClass="dialog-subtitle" text="Fill in the details to create a new appointment" />
-            
-            <Separator />
-            
-            <!-- Form Fields -->
-            <VBox spacing="15" VBox.vgrow="ALWAYS">
-                <VBox spacing="5">
-                    <Label styleClass="field-label" text="Patient" />
-                    <HBox spacing="10">
-                        <TextField fx:id="patientField" promptText="Search or enter patient ID" styleClass="form-field" HBox.hgrow="ALWAYS" />
-                        <Button styleClass="search-icon-btn" text="🔍" />
-                    </HBox>
-                </VBox>
-                
-                <VBox spacing="5">
-                    <Label styleClass="field-label" text="Doctor/Specialty" />
-                    <ComboBox fx:id="doctorSpecialtyCombo" maxWidth="Infinity" promptText="Select doctor or specialty" styleClass="form-field" />
-                </VBox>
-                
-                <HBox spacing="15">
-                    <VBox spacing="5" HBox.hgrow="ALWAYS">
-                        <Label styleClass="field-label" text="Date" />
-                        <DatePicker fx:id="datePicker" maxWidth="Infinity" promptText="mm/dd/yyyy" styleClass="form-field" />
-                    </VBox>
-                    
-                    <VBox spacing="5" HBox.hgrow="ALWAYS">
-                        <Label styleClass="field-label" text="Time" />
-                        <TextField fx:id="timeField" promptText="--:-- --" styleClass="form-field" />
-                    </VBox>
-                </HBox>
-                
-                <VBox spacing="5">
-                    <Label styleClass="field-label" text="Reason for Visit" />
-                    <TextArea fx:id="reasonField" prefRowCount="3" promptText="Brief description" styleClass="form-field" />
-                </VBox>
-            </VBox>
-            
-            <!-- Dialog Actions -->
-            <HBox alignment="CENTER_RIGHT" spacing="15">
-                <padding>
-                    <Insets top="10" />
-                </padding>
-                <Button fx:id="cancelBtn" onAction="#handleCloseDialog" prefWidth="120" styleClass="btn-secondary" text="Cancel" />
-                <Button fx:id="scheduleBtn" onAction="#handleScheduleAppointment" prefWidth="180" styleClass="btn-primary" text="Schedule Appointment" />
-            </HBox>
-        </VBox>
-    </StackPane>
+    <!-- Appointment dialog removed for rework. -->
     
 </BorderPane>
