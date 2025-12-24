@@ -125,7 +125,6 @@ public class ServiceController implements Initializable {
             Label serviceName = (Label) card.lookup("#serviceName");
             Label serviceCategory = (Label) card.lookup("#serviceCategory");
             Label serviceDescription = (Label) card.lookup("#serviceDescription");
-            VBox iconBox = (VBox) card.lookup("#iconBox");
             
             if (serviceName != null) {
                 serviceName.setText(s.getServiceName());

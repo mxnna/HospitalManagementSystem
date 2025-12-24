@@ -132,11 +132,9 @@ public class DashboardController implements Initializable {
                 String patient = a.getPatientName();
                 String doctor = a.getDoctorName();
                 String dateTime = a.getDateTime();
-                String date = "";
-                String time = dateTime != null && dateTime.contains("\n") ? dateTime.split("\\n")[0] : dateTime;
                 String timeOnly = dateTime != null && dateTime.contains("\n") ? dateTime.split("\\n")[1] : "";
                 String status = a.getStatus();
-                apptItems.add(new Appointment(id, "", patient, "", doctor, a.getSpecialty(), date, timeOnly, status, ""));
+                apptItems.add(new Appointment(id, "", patient, "", doctor, a.getSpecialty(), "", timeOnly, status, ""));
             }
         }
     }

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="20" style="-fx-padding: 25;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shahd.hospitalmanagementsystem.AddDoctorDialogController">
+    <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="Add New Doctor" />
+    
+    <GridPane hgap="15" vgap="15">
+        <columnConstraints>
+            <javafx.scene.layout.ColumnConstraints percentWidth="50" />
+            <javafx.scene.layout.ColumnConstraints percentWidth="50" />
+        </columnConstraints>
+        
+        <!-- Full Name -->
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0">
+            <Label style="-fx-font-weight: bold;" text="Full Name" />
+            <TextField fx:id="fullNameField" promptText="Enter full name" style="-fx-padding: 8; -fx-border-color: #ddd; -fx-border-radius: 4;" />
+        </VBox>
+        
+        <!-- Email -->
+        <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <Label style="-fx-font-weight: bold;" text="Email" />
+            <TextField fx:id="emailField" promptText="example@email.com" style="-fx-padding: 8; -fx-border-color: #ddd; -fx-border-radius: 4;" />
+        </VBox>
+        
+        <!-- Phone -->
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <Label style="-fx-font-weight: bold;" text="Phone" />
+            <TextField fx:id="phoneField" promptText="+1 (555) 123-4567" style="-fx-padding: 8; -fx-border-color: #ddd; -fx-border-radius: 4;" />
+        </VBox>
+        
+        <!-- License Number -->
+        <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Label style="-fx-font-weight: bold;" text="License Number" />
+            <TextField fx:id="licenseField" promptText="Medical license #" style="-fx-padding: 8; -fx-border-color: #ddd; -fx-border-radius: 4;" />
+        </VBox>
+        
+        <!-- Specialization -->
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="2">
+            <Label style="-fx-font-weight: bold;" text="Specialization" />
+            <ComboBox fx:id="specializationCombo" promptText="Select specialization" style="-fx-padding: 8; -fx-border-color: #ddd; -fx-border-radius: 4;" />
+        </VBox>
+        
+        <!-- Department -->
+        <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label style="-fx-font-weight: bold;" text="Department" />
+            <ComboBox fx:id="departmentCombo" promptText="Select department" style="-fx-padding: 8; -fx-border-color: #ddd; -fx-border-radius: 4;" />
+        </VBox>
+        
+        <!-- Qualification -->
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="3">
+            <Label style="-fx-font-weight: bold;" text="Qualification" />
+            <TextField fx:id="qualificationField" promptText="e.g., MD, MBBS" style="-fx-padding: 8; -fx-border-color: #ddd; -fx-border-radius: 4;" />
+        </VBox>
+        
+        <!-- Experience -->
+        <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label style="-fx-font-weight: bold;" text="Experience (years)" />
+            <Spinner fx:id="experienceField" style="-fx-padding: 8; -fx-border-color: #ddd; -fx-border-radius: 4;" />
+        </VBox>
+        
+        <!-- Status -->
+        <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="4">
+            <Label style="-fx-font-weight: bold;" text="Status" />
+            <ComboBox fx:id="statusCombo" promptText="Active" style="-fx-padding: 8; -fx-border-color: #ddd; -fx-border-radius: 4;" />
+        </VBox>
+    </GridPane>
+    
+    <!-- Action Buttons -->
+    <HBox spacing="10">
+        <Region HBox.hgrow="ALWAYS" />
+        <Button fx:id="cancelBtn" onAction="#handleCancel" style="-fx-padding: 10 20 10 20; -fx-font-size: 13;" text="Cancel" />
+        <Button fx:id="saveBtn" onAction="#handleSave" style="-fx-padding: 10 20 10 20; -fx-font-size: 13; -fx-text-fill: white; -fx-background-color: #1e88e5; -fx-background-radius: 5;" text="Save Doctor" />
+    </HBox>
+</VBox>

@@ -105,11 +105,6 @@ public class patientController implements Initializable {
           Statement stmt = conn.createStatement();
           ResultSet rs = stmt.executeQuery(query)) {
 
-        if (conn == null) {
-          System.err.println("Connection is null for query: " + query);
-          continue;
-        }
-
         System.out.println("Executing query: " + query);
         java.sql.ResultSetMetaData md = rs.getMetaData();
         System.out.println("Found columns: " + md.getColumnCount());

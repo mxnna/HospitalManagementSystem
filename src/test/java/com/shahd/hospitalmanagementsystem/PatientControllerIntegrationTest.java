@@ -217,13 +217,15 @@ public class PatientControllerIntegrationTest {
         try {
           var fld = controller.getClass().getDeclaredField("patientList");
           fld.setAccessible(true);
-          java.util.List list = (java.util.List) fld.get(controller);
+          @SuppressWarnings("unchecked")
+          java.util.List<Object> list = (java.util.List<Object>) fld.get(controller);
           com.shahd.models.Patient tmp = new com.shahd.models.Patient("TMP01","Test","Patient","1990-01-01","(555) 000-0000","test@local","","","","2025-12-23");
           list.add(tmp);
 
           var fld2 = controller.getClass().getDeclaredField("filteredList");
           fld2.setAccessible(true);
-          java.util.List filtered = (java.util.List) fld2.get(controller);
+          @SuppressWarnings("unchecked")
+          java.util.List<Object> filtered = (java.util.List<Object>) fld2.get(controller);
           filtered.clear(); filtered.addAll(list);
         } catch (Exception e) {
           exs[0] = e;
