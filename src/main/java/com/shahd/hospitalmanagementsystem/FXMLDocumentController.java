@@ -23,6 +23,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -31,7 +33,7 @@ import javafx.stage.Stage;
  */
 public class FXMLDocumentController implements Initializable {
     @FXML
-    private AnchorPane login_form;
+    private VBox login_form;
 
     @FXML
     private Button login_loginbtn;
@@ -46,7 +48,7 @@ public class FXMLDocumentController implements Initializable {
     private TextField login_username;
 
     @FXML
-    private AnchorPane main_form;
+    private StackPane main_form;
     
     public void userList(){
         List<String> listU = new ArrayList<>();
@@ -68,7 +70,7 @@ public class FXMLDocumentController implements Initializable {
         String username = login_username.getText().trim();
         String password = login_password.getText().trim();
 
-        if (username.equals("shahd") && password.equals("123")) {
+        if (username.equals("admin1") && password.equals("12345")) {
             System.out.println("Credentials correct, loading homepage...");
 
             try {
@@ -85,9 +87,6 @@ public class FXMLDocumentController implements Initializable {
                 scene.getStylesheets().add(getClass().getResource("pagedesign.css").toExternalForm());
                 stage.setScene(scene);
                 stage.setTitle("Hospital Management System | Home page");
-                stage.setWidth(1100);
-                stage.setHeight(1297);
-                stage.show();
                 
                 System.out.println("Homepage loaded successfully!");
 

@@ -7,11 +7,14 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -30,7 +33,7 @@ public class DoctorManagementController implements Initializable {
     @FXML private TableColumn<Doctor, String> nameColumn, departmentColumn, contactColumn, experienceColumn, statusColumn, actionsColumn;
     @FXML private TextField searchField;
     @FXML private ComboBox<String> departmentFilter, statusFilter;
-    @FXML private FlowPane departmentsFlow;
+    @FXML private GridPane departmentsFlow;
 
     private ObservableList<Doctor> allDoctors = FXCollections.observableArrayList();
     private ObservableList<Doctor> filteredDoctors = FXCollections.observableArrayList();
@@ -82,9 +85,10 @@ public class DoctorManagementController implements Initializable {
                 } else {
                     Button editBtn = new Button("✎");
                     Button deleteBtn = new Button("🗑");
-                    editBtn.setStyle("-fx-padding: 5 10 5 10; -fx-font-size: 12;");
-                    deleteBtn.setStyle("-fx-padding: 5 10 5 10; -fx-font-size: 12; -fx-text-fill: #d32f2f;");
-                    HBox hbox = new HBox(5, editBtn, deleteBtn);
+                    editBtn.setStyle("-fx-padding: 8 12 8 12; -fx-font-size: 12; -fx-background-color: #00b4d8; -fx-border-radius: 4; -fx-cursor: hand; -fx-text-fill: white; -fx-font-weight: bold;");
+                    deleteBtn.setStyle("-fx-padding: 8 12 8 12; -fx-font-size: 12; -fx-background-color: #d32f2f; -fx-border-radius: 4; -fx-cursor: hand; -fx-text-fill: white; -fx-font-weight: bold;");
+                    HBox hbox = new HBox(8, editBtn, deleteBtn);
+                    hbox.setAlignment(javafx.geometry.Pos.CENTER);
                     setGraphic(hbox);
                 }
             }
@@ -155,28 +159,71 @@ public class DoctorManagementController implements Initializable {
 
     private void displayDepartmentCards() {
         departmentsFlow.getChildren().clear();
+        int row = 0;
+        int col = 0;
         for (Department dept : departments) {
             VBox card = createDepartmentCard(dept);
-            departmentsFlow.getChildren().add(card);
+            card.setMaxWidth(Double.MAX_VALUE);
+            card.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setHgrow(card, Priority.ALWAYS);
+            departmentsFlow.add(card, col, row);
+            col++;
+            if (col >= 3) {
+                col = 0;
+                row++;
+            }
         }
     }
 
     private VBox createDepartmentCard(Department dept) {
-        VBox card = new VBox(10);
+        VBox card = new VBox(12);
         card.getStyleClass().add("doctor-card");
-        card.setMinWidth(280);
+        card.setMinWidth(300);
+        card.setStyle("-fx-padding: 20; -fx-border-color: #e0e0e0; -fx-border-radius: 8; -fx-background-color: white;");
 
         Label deptName = new Label(dept.getName());
-        deptName.getStyleClass().add("dept-name");
+        deptName.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #1a1a1a;");
 
-        Label activeCount = new Label("Active Doctors: " + dept.getActiveDoctorCount());
-        activeCount.getStyleClass().add("muted");
+        // Count active and inactive doctors in this department
+        long activeDoctorCount = allDoctors.stream()
+            .filter(d -> d.getDepartment().equals(dept.getName()) && "active".equalsIgnoreCase(d.getStatus()))
+            .count();
+        long inactiveDoctorCount = allDoctors.stream()
+            .filter(d -> d.getDepartment().equals(dept.getName()) && "inactive".equalsIgnoreCase(d.getStatus()))
+            .count();
 
-        Label totalCount = new Label("Total: " + dept.getActiveDoctorCount());
-        totalCount.getStyleClass().add("muted");
+        HBox countsBox = new HBox(30);
+        countsBox.setStyle("-fx-padding: 10 0;");
+        
+        VBox activeBox = new VBox(4);
+        Label activeLabel = new Label("Active Doctors");
+        activeLabel.setStyle("-fx-font-size: 12; -fx-text-fill: #666;");
+        Label activeNum = new Label(String.valueOf(activeDoctorCount));
+        activeNum.setStyle("-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #00b4d8;");
+        activeBox.getChildren().addAll(activeLabel, activeNum);
+        
+        VBox inactiveBox = new VBox(4);
+        Label inactiveLabel = new Label("Inactive Doctors");
+        inactiveLabel.setStyle("-fx-font-size: 12; -fx-text-fill: #666;");
+        Label inactiveNum = new Label(String.valueOf(inactiveDoctorCount));
+        inactiveNum.setStyle("-fx-font-size: 14; -fx-font-weight: bold; -fx-text-fill: #d32f2f;");
+        inactiveBox.getChildren().addAll(inactiveLabel, inactiveNum);
+        
+        countsBox.getChildren().addAll(activeBox, inactiveBox);
 
-        card.getChildren().addAll(deptName, activeCount, totalCount);
+        Button viewButton = new Button("View Doctors");
+        viewButton.setStyle("-fx-padding: 10 20; -fx-font-size: 13; -fx-background-color: #f5f5f5; -fx-border-color: #d0d0d0; -fx-border-radius: 5; -fx-cursor: hand;");
+        viewButton.setMaxWidth(Double.MAX_VALUE);
+        viewButton.setOnAction(e -> filterByDepartment(dept.getName()));
+
+        card.getChildren().addAll(deptName, countsBox, viewButton);
         return card;
+    }
+
+    private void filterByDepartment(String deptName) {
+        departmentFilter.setValue(deptName);
+        switchToDoctorsTab(null);
+        applyFilters(null);
     }
 
     private void setupFilters() {

@@ -51,9 +51,6 @@ public class patientController implements Initializable {
   private TableColumn<Patient, String> insuranceColumn;
 
   @FXML
-  private TableColumn<Patient, String> visitColumn;
-
-  @FXML
   private TableColumn<Patient, Button> actionsColumn;
 
   @FXML
@@ -120,9 +117,39 @@ public class patientController implements Initializable {
           String phone = safeGet(rs, md, "phone");
           String email = safeGet(rs, md, "email");
           String insurance = safeGet(rs, md, "insurance_provider", "insurance");
+          // If patient row has no insurance, try to look up from invoices table (billing data)
+          if (insurance == null || insurance.trim().isEmpty()) {
+            try (PreparedStatement insStmt = conn.prepareStatement(
+                "SELECT insurance FROM invoices WHERE patient_id = ? ORDER BY rowid DESC LIMIT 1")) {
+              insStmt.setString(1, id);
+              try (ResultSet insRs = insStmt.executeQuery()) {
+                if (insRs.next()) {
+                  String invIns = insRs.getString(1);
+                  if (invIns != null && !invIns.trim().isEmpty()) {
+                    insurance = invIns;
+                  }
+                }
+              }
+            } catch (Exception e) {
+              // invoices table may not exist in user's DB; ignore and continue
+            }
+          }
           String emergencyName = safeGet(rs, md, "emergency_contact_name", "emergency_contact");
           String emergencyPhone = safeGet(rs, md, "emergency_contact_phone", "emergency_phone");
           String lastVisit = safeGet(rs, md, "last_visit", "last_visit_date");
+
+          // If insurance is still empty, seed a default value and persist it to the patients table
+          if (insurance == null || insurance.trim().isEmpty()) {
+            insurance = "Self-pay";
+            try (PreparedStatement upd = conn.prepareStatement(
+                "UPDATE patients SET insurance_provider = ? WHERE patient_id = ?")) {
+              upd.setString(1, insurance);
+              upd.setString(2, id);
+              upd.executeUpdate();
+            } catch (SQLException ex) {
+              // ignore failures to update DB (table may be read-only or schema different)
+            }
+          }
 
           Patient p = new Patient(id, first, last, dob, phone, email, insurance, emergencyName, emergencyPhone, lastVisit);
           patientList.add(p);
@@ -216,29 +243,17 @@ public class patientController implements Initializable {
       @Override
       protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
-        if (empty || item == null) {
+        if (empty) {
           setText(null);
         } else {
-          setText(item);
+          String out = (item == null || item.trim().isEmpty()) ? "N/A" : item;
+          setText(out);
           setStyle("-fx-text-fill: #374151; -fx-font-weight: 500;");
         }
       }
     });
 
-    // Last Visit Column
-    visitColumn.setCellValueFactory(new PropertyValueFactory<>("lastVisit"));
-    visitColumn.setCellFactory(col -> new TableCell<Patient, String>() {
-      @Override
-      protected void updateItem(String item, boolean empty) {
-        super.updateItem(item, empty);
-        if (empty || item == null) {
-          setText(null);
-        } else {
-          setText(item);
-          setStyle("-fx-text-fill: #6b7280;");
-        }
-      }
-    });
+    // Note: Last Visit column removed from UI; keeping data in model but not displayed.
 
     // Actions Column
     actionsColumn.setCellFactory(col -> new TableCell<Patient, Button>() {

@@ -21,32 +21,43 @@
 
 <BorderPane styleClass="root" stylesheets="@appointment.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shahd.hospitalmanagementsystem.AppointmentController">
     
-    <!-- Header -->
+    <!-- Top unified header (consistent across pages) -->
     <top>
-        <VBox styleClass="header-section">
-            <HBox alignment="CENTER_LEFT" spacing="20">
-                <VBox HBox.hgrow="ALWAYS">
-                    <Label styleClass="main-title" text="Appointments Management">
-                        <font>
-                            <Font name="System Bold" size="28" />
-                        </font>
-                    </Label>
-                    <Label styleClass="subtitle" text="Schedule and manage patient appointments">
-                        <font>
-                            <Font size="14" />
-                        </font>
-                    </Label>
-                </VBox>
-                <Button fx:id="newAppointmentBtn" onAction="#handleNewAppointment" styleClass="btn-primary" text="+ New Appointment" />
-            </HBox>
-            
-            <!-- Tab Bar -->
-            <HBox spacing="30" styleClass="tab-bar">
+        <VBox>
+            <HBox styleClass="header" alignment="CENTER_LEFT" spacing="10">
                 <padding>
-                    <Insets bottom="10" top="20" />
+                    <Insets top="20" right="30" bottom="20" left="30"/>
                 </padding>
-                <Label styleClass="tab-active" text="List View" />
+                <Text text="Hospital Management System" styleClass="header-title" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Label text="AU" styleClass="user-badge" />
             </HBox>
+            <!-- Page specific header -->
+            <VBox styleClass="header-section">
+                <HBox alignment="CENTER_LEFT" spacing="20">
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label styleClass="main-title" text="Appointments Management">
+                            <font>
+                                <Font name="System Bold" size="28" />
+                            </font>
+                        </Label>
+                        <Label styleClass="subtitle" text="Schedule and manage patient appointments">
+                            <font>
+                                <Font size="14" />
+                            </font>
+                        </Label>
+                    </VBox>
+                    <Button fx:id="newAppointmentBtn" onAction="#handleNewAppointment" styleClass="register-button" text="+ New Appointment" />
+                </HBox>
+                
+                <!-- Tab Bar -->
+                <HBox spacing="30" styleClass="tab-bar">
+                    <padding>
+                        <Insets bottom="10" top="20" />
+                    </padding>
+                    <Label styleClass="tab-active" text="List View" />
+                </HBox>
+            </VBox>
         </VBox>
     </top>
     
@@ -82,7 +93,10 @@
             </HBox>
             
             <!-- Table with Sample Data -->
-            <TableView fx:id="appointmentTable" styleClass="appointment-table" VBox.vgrow="ALWAYS">
+            <TableView fx:id="appointmentTable" styleClass="appointment-table" VBox.vgrow="ALWAYS" maxWidth="Infinity">
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
                 <columns>
                     <TableColumn fx:id="idColumn" prefWidth="120" text="Appointment ID" />
                     <TableColumn fx:id="patientColumn" prefWidth="180" text="Patient" />

@@ -181,7 +181,7 @@ public class BillingInController implements Initializable {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    collectBtn.setStyle("-fx-padding: 5px 15px; -fx-font-size: 12px;");
+                    collectBtn.setStyle("-fx-padding: 8 16 8 16; -fx-font-size: 12; -fx-background-color: #00b4d8; -fx-text-fill: white; -fx-border-radius: 4; -fx-cursor: hand; -fx-font-weight: bold;");
                     collectBtn.setOnAction(e -> {
                         Invoice inv = getTableView().getItems().get(getIndex());
                         System.out.println("Collecting payment for " + inv.getPatientName());
@@ -233,7 +233,7 @@ public class BillingInController implements Initializable {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    printBtn.setStyle("-fx-padding: 5px 10px; -fx-font-size: 12px;");
+                    printBtn.setStyle("-fx-padding: 8 12 8 12; -fx-font-size: 12; -fx-background-color: #0096c7; -fx-border-radius: 4; -fx-cursor: hand; -fx-text-fill: white; -fx-font-weight: bold;");
                     printBtn.setOnAction(e -> {
                         Transaction trans = getTableView().getItems().get(getIndex());
                         System.out.println("Printing receipt for transaction " + trans.getTransactionId());

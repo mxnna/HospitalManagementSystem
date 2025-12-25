@@ -42,8 +42,15 @@ public class DashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setupTableColumns();
-        loadCounts();
+        // Load appointments first so the dashboard count can reflect actual items
         loadAppointments();
+        loadCounts();
+        // Ensure appointments count reflects loaded items if DB count was zero
+        try {
+            appointmentsCount.setText(String.valueOf(apptItems.size()));
+        } catch (Exception ex) {
+            // ignore
+        }
         loadEmergencies();
     }
 
@@ -86,7 +93,7 @@ public class DashboardController implements Initializable {
         int emergencies = tryQueryCount("SELECT COUNT(*) FROM appointments WHERE status IN ('emergency','critical') OR priority='critical'");
 
         // Fallbacks if DB not available
-        if (appts < 0) appts = 6; // sample
+        if (appts < 0) appts = 30; // sample (increase fallback to better reflect checked-in patients)
         if (patients < 0) patients = 18;
         if (doctors < 0) doctors = 12;
         if (emergencies < 0) emergencies = 3;

@@ -10,9 +10,16 @@
 <?import javafx.geometry.Insets?>
 
 
-<!--<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hospitalmanagementsystem.AboutUsController">
-    
-</AnchorPane>-->
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+
 
 <ScrollPane fitToWidth="true" fitToHeight="false" minHeight="0" minWidth="0"
             xmlns="http://javafx.com/javafx/21"
@@ -24,8 +31,18 @@
     <content>
         <VBox spacing="25"
               style="-fx-background-color: #f5f7fb;">
+            <!-- Header -->
+            <HBox styleClass="header" alignment="CENTER_LEFT" spacing="10">
+                <padding>
+                    <Insets top="20" right="30" bottom="20" left="30"/>
+                </padding>
+                <Text text="Hospital Management System" styleClass="header-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="AU" styleClass="user-badge"/>
+            </HBox>
+            
             <padding>
-                <Insets top="20" right="20" bottom="20" left="20"/>
+                <Insets top="0" right="20" bottom="20" left="20"/>
             </padding>
 
             <!-- Title -->
@@ -74,8 +91,13 @@
                        style="-fx-text-fill: #777;"/>
 
                 <GridPane hgap="15" vgap="15">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS" />
+                        <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS" />
+                        <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS" />
+                    </columnConstraints>
 
-                    <VBox spacing="5"
+                    <VBox spacing="5" GridPane.hgrow="ALWAYS" maxWidth="Infinity"
                           style="-fx-background-color: #f5f7fb; -fx-background-radius: 8;">
                         <padding>
                             <Insets top="15" right="15" bottom="15" left="15"/>
@@ -84,8 +106,7 @@
                         <Label text="ext. 1234"/>
                         <Label text="it@hospital.com"/>
                     </VBox>
-
-                    <VBox GridPane.columnIndex="1" spacing="5"
+                    <VBox GridPane.columnIndex="1" spacing="5" GridPane.hgrow="ALWAYS" maxWidth="Infinity"
                           style="-fx-background-color: #f5f7fb; -fx-background-radius: 8;">
                         <padding>
                             <Insets top="15" right="15" bottom="15" left="15"/>
@@ -95,7 +116,7 @@
                         <Label text="pharmacy@hospital.com"/>
                     </VBox>
 
-                    <VBox GridPane.columnIndex="2" spacing="5"
+                    <VBox GridPane.columnIndex="2" spacing="5" GridPane.hgrow="ALWAYS" maxWidth="Infinity"
                           style="-fx-background-color: #f5f7fb; -fx-background-radius: 8;">
                         <padding>
                             <Insets top="15" right="15" bottom="15" left="15"/>
@@ -105,7 +126,7 @@
                         <Label text="billing@hospital.com"/>
                     </VBox>
 
-                    <VBox GridPane.rowIndex="1" spacing="5"
+                    <VBox GridPane.rowIndex="1" spacing="5" GridPane.hgrow="ALWAYS" maxWidth="Infinity"
                           style="-fx-background-color: #f5f7fb; -fx-background-radius: 8;">
                         <padding>
                             <Insets top="15" right="15" bottom="15" left="15"/>
@@ -115,7 +136,7 @@
                         <Label text="emergency@hospital.com"/>
                     </VBox>
 
-                    <VBox GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="5"
+                    <VBox GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="5" GridPane.hgrow="ALWAYS" maxWidth="Infinity"
                           style="-fx-background-color: #f5f7fb; -fx-background-radius: 8;">
                         <padding>
                             <Insets top="15" right="15" bottom="15" left="15"/>
@@ -125,7 +146,7 @@
                         <Label text="admin@hospital.com"/>
                     </VBox>
 
-                    <VBox GridPane.rowIndex="1" GridPane.columnIndex="2" spacing="5"
+                    <VBox GridPane.rowIndex="1" GridPane.columnIndex="2" spacing="5" GridPane.hgrow="ALWAYS" maxWidth="Infinity"
                           style="-fx-background-color: #f5f7fb; -fx-background-radius: 8;">
                         <padding>
                             <Insets top="15" right="15" bottom="15" left="15"/>
@@ -156,17 +177,17 @@
 
                 <HBox spacing="20">
                     <Label text="Patient Privacy Policy"/>
-                    <Button text="View Document"/>
+                    <Button text="View Document" styleClass="view-document-button"/>
                 </HBox>
 
                 <HBox spacing="20">
                     <Label text="Front Office Procedures"/>
-                    <Button text="View Document"/>
+                    <Button text="View Document" styleClass="view-document-button"/>
                 </HBox>
 
                 <HBox spacing="20">
                     <Label text="Emergency Protocols"/>
-                    <Button text="View Document"/>
+                    <Button text="View Document" styleClass="view-document-button"/>
                 </HBox>
             </VBox>
 

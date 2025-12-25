@@ -22,8 +22,6 @@ import javafx.scene.layout.StackPane;
  */
 public class AppointmentController implements Initializable {
   @FXML
-  private TableColumn<Appointment, String> actionsColumn;
-  @FXML
   private TableView<Appointment> appointmentTable;
   @FXML
   private Button cancelBtn;

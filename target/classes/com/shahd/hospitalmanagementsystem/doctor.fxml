@@ -10,31 +10,39 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shahd.hospitalmanagementsystem.DoctorManagementController" stylesheets="@doctor.css">
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 20; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;">
-            <styleClass>
-                <String fx:value="doctor-header" />
-            </styleClass>
-            <Label style="-fx-font-size: 24; -fx-font-weight: bold;" text="Doctor Management" />
-            <Label fx:id="statusLabel" style="-fx-text-fill: #999; -fx-font-size: 14;" text="Manage doctors, schedules, and departments" />
-            <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="addDoctorBtn" onAction="#openAddDoctorDialog" style="-fx-padding: 10 20 10 20; -fx-font-size: 14; -fx-text-fill: white; -fx-background-color: #1e88e5; -fx-background-radius: 5;" text="+ Add Doctor">
-                <styleClass>
-                    <String fx:value="add-doctor" />
-                </styleClass>
-            </Button>
-        </HBox>
+        <VBox>
+            <HBox styleClass="header" alignment="CENTER_LEFT" spacing="10">
+                <padding>
+                    <Insets top="20" right="30" bottom="20" left="30"/>
+                </padding>
+                <Text text="Hospital Management System" styleClass="header-title"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Label text="AU" styleClass="user-badge"/>
+            </HBox>
+        </VBox>
     </top>
     
     <center>
         <VBox spacing="15" style="-fx-padding: 20;">
+            <!-- Page Title (integrated with header) -->
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <VBox spacing="5" HBox.hgrow="ALWAYS">
+                    <Text text="Doctor Management" style="-fx-font-size:24; -fx-font-weight:bold;" />
+                    <Text text="Manage doctors, schedules, and departments" style="-fx-fill:#999;" />
+                </VBox>
+                <Button fx:id="addDoctorBtn" onAction="#openAddDoctorDialog" text="+ Add Doctor" styleClass="add-doctor" />
+            </HBox>
             <!-- Tab buttons -->
             <HBox spacing="10">
                 <styleClass>
@@ -81,7 +89,10 @@
                 </HBox>
                 
                 <!-- Doctors Table -->
-                <TableView fx:id="doctorsTable" prefHeight="400" VBox.vgrow="ALWAYS">
+                <TableView fx:id="doctorsTable" prefHeight="400" VBox.vgrow="ALWAYS" maxWidth="Infinity">
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
                     <styleClass>
                         <String fx:value="appointment-table" />
                     </styleClass>
@@ -103,11 +114,13 @@
                 
                 <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent;">
                     <content>
-                        <FlowPane fx:id="departmentsFlow" hgap="15" prefWrapLength="1000" vgap="15">
-                            <styleClass>
-                                <String fx:value="flow-pane" />
-                            </styleClass>
-                        </FlowPane>
+                        <GridPane fx:id="departmentsFlow" hgap="15" vgap="15">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS" />
+                                <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS" />
+                                <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS" />
+                            </columnConstraints>
+                        </GridPane>
                     </content>
                 </ScrollPane>
             </VBox>

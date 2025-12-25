@@ -14,61 +14,26 @@ import javafx.collections.ObservableList;
 public class Appointmentdataprovider {
     public static ObservableList<Appointment> getSampleAppointments() {
         ObservableList<Appointment> appointments = FXCollections.observableArrayList();
-        
-        appointments.add(new Appointment(
-            "APT001", 
-            "Sarah Johnson\nP12345", 
-            "Dr. Robert Smith", 
-            "Cardiology", 
-            "10/20/2025\n09:00 AM", 
-            "confirmed"
-        ));
-        
-        appointments.add(new Appointment(
-            "APT002", 
-            "Mike Brown\nP12346", 
-            "Dr. Jennifer Lee", 
-            "Orthopedics", 
-            "10/20/2025\n09:30 AM", 
-            "scheduled"
-        ));
-        
-        appointments.add(new Appointment(
-            "APT003", 
-            "Emily Davis\nP12347", 
-            "Dr. Robert Smith", 
-            "Cardiology", 
-            "10/20/2025\n10:00 AM", 
-            "scheduled"
-        ));
-        
-        appointments.add(new Appointment(
-            "APT004", 
-            "James Wilson\nP12348", 
-            "Dr. Priya Patel", 
-            "Neurology", 
-            "10/20/2025\n10:30 AM", 
-            "checked-in"
-        ));
-        
-        appointments.add(new Appointment(
-            "APT005", 
-            "Lisa Anderson\nP12349", 
-            "Dr. Jennifer Lee", 
-            "Orthopedics", 
-            "10/20/2025\n11:00 AM", 
-            "confirmed"
-        ));
-        
-        appointments.add(new Appointment(
-            "APT006", 
-            "David Martinez\nP12350", 
-            "Dr. Michael Chen", 
-            "Dermatology", 
-            "10/21/2025\n02:00 PM", 
-            "scheduled"
-        ));
-        
+        String[] doctors = {"Dr. Robert Smith", "Dr. Jennifer Lee", "Dr. Priya Patel", "Dr. Michael Chen", "Dr. Aisha Khan"};
+        String[] specialties = {"Cardiology", "Orthopedics", "Neurology", "Dermatology", "General"};
+        String[] statuses = {"scheduled", "confirmed", "checked-in", "cancelled"};
+
+        // Generate 30 sample appointments to better represent a busy day
+        for (int i = 1; i <= 30; i++) {
+            String id = String.format("APT%03d", i);
+            String patient = String.format("Patient %02d\nP12%03d", i, 40 + i);
+            String doctor = doctors[i % doctors.length];
+            String specialty = specialties[i % specialties.length];
+            // distribute times across the day
+            int hour = 8 + (i % 10); // 8..17
+            String ampm = hour < 12 ? "AM" : "PM";
+            int displayHour = hour <= 12 ? hour : hour - 12;
+            String minute = (i % 2 == 0) ? "30" : "00";
+            String dateTime = String.format("10/20/2025\n%02d:%s %s", displayHour, minute, ampm);
+            String status = statuses[i % statuses.length];
+            appointments.add(new Appointment(id, patient, doctor, specialty, dateTime, status));
+        }
+
         return appointments;
     }
     
