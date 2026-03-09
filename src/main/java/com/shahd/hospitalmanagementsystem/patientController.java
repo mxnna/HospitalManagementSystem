@@ -137,6 +137,7 @@ public class patientController implements Initializable {
           String emergencyName = safeGet(rs, md, "emergency_contact_name", "emergency_contact");
           String emergencyPhone = safeGet(rs, md, "emergency_contact_phone", "emergency_phone");
           String lastVisit = safeGet(rs, md, "last_visit", "last_visit_date");
+          String gender = safeGet(rs, md, "gender");
 
           // If insurance is still empty, seed a default value and persist it to the patients table
           if (insurance == null || insurance.trim().isEmpty()) {
@@ -151,7 +152,7 @@ public class patientController implements Initializable {
             }
           }
 
-          Patient p = new Patient(id, first, last, dob, phone, email, insurance, emergencyName, emergencyPhone, lastVisit);
+          Patient p = new Patient(id, first, last, dob, phone, email, insurance, emergencyName, emergencyPhone, gender, lastVisit);
           patientList.add(p);
           count++;
         }
@@ -355,6 +356,13 @@ public class patientController implements Initializable {
     dobPicker.setPromptText("mm/dd/yyyy");
     dobPicker.getStyleClass().add("form-field");
 
+    // Gender
+    Label genderLabel = new Label("Gender");
+    genderLabel.getStyleClass().add("form-label");
+    ComboBox<String> genderField = new ComboBox<>(FXCollections.observableArrayList("Male", "Female", "Other", "Undisclosed"));
+    genderField.setPromptText("Select gender");
+    genderField.getStyleClass().add("form-field");
+
     // Phone Number
     Label phoneLabel = new Label("Phone Number");
     phoneLabel.getStyleClass().add("form-label");
@@ -372,8 +380,9 @@ public class patientController implements Initializable {
     // Insurance
     Label insuranceLabel = new Label("Insurance Provider");
     insuranceLabel.getStyleClass().add("form-label");
-    TextField insuranceField = new TextField();
-    insuranceField.setPromptText("Insurance company name");
+    ComboBox<String> insuranceField = new ComboBox<>(FXCollections.observableArrayList(
+            "Self-pay", "Medicare", "Medicaid", "Bupa", "Other"));
+    insuranceField.setPromptText("Select provider");
     insuranceField.getStyleClass().add("form-field");
 
     // Emergency Contact
@@ -391,8 +400,10 @@ public class patientController implements Initializable {
 
     form.add(dobLabel, 0, 2);
     form.add(dobPicker, 0, 3);
-    form.add(phoneLabel, 1, 2);
-    form.add(phoneField, 1, 3);
+    form.add(genderLabel, 1, 2);
+    form.add(genderField, 1, 3);
+    form.add(phoneLabel, 0, 4);
+    form.add(phoneField, 0, 5);
 
     form.add(emailLabel, 0, 4);
     form.add(emailField, 0, 5);
@@ -422,9 +433,14 @@ public class patientController implements Initializable {
         return;
       }
 
-      String newId = "P" + System.currentTimeMillis();
-      String dob = dobPicker.getValue() != null ? dobPicker.getValue().format(DateTimeFormatter.ofPattern("M/d/yyyy"))
-          : "";
+      // leave patient ID blank; database or controller will assign automatically
+      String newId = "";
+      // standardize date to ISO format for database
+      String dob = "";
+      if (dobPicker.getValue() != null) {
+        dob = dobPicker.getValue().toString();
+      }
+      String genderVal = genderField.getValue() != null ? genderField.getValue() : "";
 
       Patient newPatient = new Patient(newId,
           firstNameField.getText(),
@@ -432,9 +448,10 @@ public class patientController implements Initializable {
           dob,
           phoneField.getText(),
           emailField.getText(),
-          insuranceField.getText(),
+          insuranceField.getValue() != null ? insuranceField.getValue() : "",
           emergencyField.getText(),
-          "",
+          "", // emergency contact phone unknown
+          genderVal,
           LocalDate.now().format(DateTimeFormatter.ofPattern("M/d/yyyy")));
 
       // Persist to DB and update lists
@@ -459,46 +476,242 @@ public class patientController implements Initializable {
   }
 
   public void addPatientToDb(Patient patient) throws SQLException {
-    String insertWithInsurance = "INSERT INTO patients (patient_id, first_name, last_name, date_of_birth, phone, email, insurance_provider, emergency_contact_name, emergency_contact_phone, last_visit, is_active) " +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, TRUE)";
-
-    String insertFallback = "INSERT INTO patients (patient_id, first_name, last_name, date_of_birth, phone, email, last_visit, is_active) " +
-        "VALUES (?, ?, ?, ?, ?, ?, ?, TRUE)";
+    boolean hasInsurance = patient.getInsuranceProvider() != null && !patient.getInsuranceProvider().trim().isEmpty();
+    boolean hasGender = patient.getGender() != null && !patient.getGender().trim().isEmpty();
+    boolean idProvided = patient.getPatientId() != null && !patient.getPatientId().trim().isEmpty();
+    boolean autoId = false;
 
     try (Connection conn = DatabaseConnection.getConnection()) {
-      try (PreparedStatement pstmt = conn.prepareStatement(insertWithInsurance)) {
-        pstmt.setString(1, patient.getPatientId());
-        pstmt.setString(2, patient.getFirstName());
-        pstmt.setString(3, patient.getLastName());
-        pstmt.setString(4, patient.getDateOfBirth());
-        pstmt.setString(5, patient.getPhone());
-        pstmt.setString(6, patient.getEmail());
-        pstmt.setString(7, patient.getInsuranceProvider());
-        pstmt.setString(8, patient.getEmergencyContactName());
-        pstmt.setString(9, patient.getEmergencyContactPhone());
-        pstmt.setString(10, patient.getLastVisit());
-        pstmt.executeUpdate();
-        return;
-      } catch (SQLException ex) {
-        // If the schema doesn't have insurance columns, try fallback insert
-        try (PreparedStatement pstmt2 = conn.prepareStatement(insertFallback)) {
-          pstmt2.setString(1, patient.getPatientId());
-          pstmt2.setString(2, patient.getFirstName());
-          pstmt2.setString(3, patient.getLastName());
-          pstmt2.setString(4, patient.getDateOfBirth());
-          pstmt2.setString(5, patient.getPhone());
-          pstmt2.setString(6, patient.getEmail());
-          pstmt2.setString(7, patient.getLastVisit());
-          pstmt2.executeUpdate();
-          return;
+      // If no ID provided, check if database has AUTO_INCREMENT
+      if (!idProvided) {
+        autoId = isPatientIdAutoIncrement(conn);
+        // If database doesn't have AUTO_INCREMENT, generate ID manually
+        if (!autoId) {
+          String gen = generatePatientId();
+          patient.patientIdProperty().set(gen);
+          idProvided = true;
         }
       }
+      autoId = !idProvided && isPatientIdAutoIncrement(conn);
+        // check for gender column dynamically
+      hasGender = hasGenderColumn(conn) && hasGender;
+      boolean hasEmergencyName = hasColumn(conn, "emergency_contact_name");
+      boolean hasEmergencyPhone = hasColumn(conn, "emergency_contact_phone");
+      String insertSql;
+      if (autoId) {
+        // database will supply patient_id automatically
+        insertSql = "INSERT INTO patients (first_name, last_name, date_of_birth, phone, email" +
+            (hasGender ? ", gender" : "") +
+            (hasInsurance ? ", insurance_provider" : "") +
+            (hasEmergencyName ? ", emergency_contact_name" : "") +
+            (hasEmergencyPhone ? ", emergency_contact_phone" : "") +
+            ", is_active) VALUES (?, ?, ?, ?, ?" +
+            (hasGender ? ", ?" : "") +
+            (hasInsurance ? ", ?" : "") +
+            (hasEmergencyName ? ", ?" : "") +
+            (hasEmergencyPhone ? ", ?" : "") +
+            ", TRUE)";
+      } else {
+        insertSql = "INSERT INTO patients (patient_id, first_name, last_name, date_of_birth, phone, email" +
+            (hasGender ? ", gender" : "") +
+            (hasInsurance ? ", insurance_provider" : "") +
+            (hasEmergencyName ? ", emergency_contact_name" : "") +
+            (hasEmergencyPhone ? ", emergency_contact_phone" : "") +
+            ", is_active) VALUES (?, ?, ?, ?, ?, ?" +
+            (hasGender ? ", ?" : "") +
+            (hasInsurance ? ", ?" : "") +
+            (hasEmergencyName ? ", ?" : "") +
+            (hasEmergencyPhone ? ", ?" : "") +
+            ", TRUE)";
+      }
+
+      try (PreparedStatement pstmt = conn.prepareStatement(insertSql, autoId ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS)) {
+        int idx = 1;
+        if (!autoId) {
+          pstmt.setString(idx++, patient.getPatientId());
+        }
+        pstmt.setString(idx++, patient.getFirstName());
+        pstmt.setString(idx++, patient.getLastName());
+        pstmt.setString(idx++, patient.getDateOfBirth());
+        pstmt.setString(idx++, patient.getPhone());
+        pstmt.setString(idx++, patient.getEmail());
+        if (hasGender) {
+          pstmt.setString(idx++, patient.getGender());
+        }
+        if (hasInsurance) {
+          pstmt.setString(idx++, patient.getInsuranceProvider());
+        }
+        if (hasEmergencyName) {
+          pstmt.setString(idx++, patient.getEmergencyContactName());
+        }
+        if (hasEmergencyPhone) {
+          pstmt.setString(idx++, patient.getEmergencyContactPhone());
+        }
+        pstmt.executeUpdate();
+
+        if (autoId) {
+          try (ResultSet keys = pstmt.getGeneratedKeys()) {
+            if (keys.next()) {
+              long generated = keys.getLong(1);
+              String assigned = "P" + generated;
+              patient.patientIdProperty().set(assigned);
+            }
+          }
+        }
+        return;
+      } catch (SQLException ex) {
+        // if a non-nullable column is missing in schema, drop it and retry
+        if ((hasInsurance && ex.getMessage() != null && ex.getMessage().toLowerCase().contains("insurance_provider"))
+            || (hasGender && ex.getMessage() != null && ex.getMessage().toLowerCase().contains("gender"))
+            || (hasEmergencyName && ex.getMessage() != null && ex.getMessage().toLowerCase().contains("emergency_contact_name"))
+            || (hasEmergencyPhone && ex.getMessage() != null && ex.getMessage().toLowerCase().contains("emergency_contact_phone"))) {
+          if (hasInsurance && ex.getMessage().toLowerCase().contains("insurance_provider")) {
+            hasInsurance = false;
+          }
+          if (hasGender && ex.getMessage().toLowerCase().contains("gender")) {
+            hasGender = false;
+          }
+          if (hasEmergencyName && ex.getMessage().toLowerCase().contains("emergency_contact_name")) {
+            hasEmergencyName = false;
+          }
+          if (hasEmergencyPhone && ex.getMessage().toLowerCase().contains("emergency_contact_phone")) {
+            hasEmergencyPhone = false;
+          }
+          // rebuild insert SQL without those problematic fields
+          if (autoId) {
+            insertSql = "INSERT INTO patients (first_name, last_name, date_of_birth, phone, email" +
+                (hasGender ? ", gender" : "") +
+                (hasInsurance ? ", insurance_provider" : "") +
+                (hasEmergencyName ? ", emergency_contact_name" : "") +
+                (hasEmergencyPhone ? ", emergency_contact_phone" : "") +
+                ", is_active) VALUES (?, ?, ?, ?, ?" +
+                (hasGender ? ", ?" : "") +
+                (hasInsurance ? ", ?" : "") +
+                (hasEmergencyName ? ", ?" : "") +
+                (hasEmergencyPhone ? ", ?" : "") +
+                ", TRUE)";
+          } else {
+            insertSql = "INSERT INTO patients (patient_id, first_name, last_name, date_of_birth, phone, email" +
+                (hasGender ? ", gender" : "") +
+                (hasInsurance ? ", insurance_provider" : "") +
+                (hasEmergencyName ? ", emergency_contact_name" : "") +
+                (hasEmergencyPhone ? ", emergency_contact_phone" : "") +
+                ", is_active) VALUES (?, ?, ?, ?, ?, ?" +
+                (hasGender ? ", ?" : "") +
+                (hasInsurance ? ", ?" : "") +
+                (hasEmergencyName ? ", ?" : "") +
+                (hasEmergencyPhone ? ", ?" : "") +
+                ", TRUE)";
+          }
+          // try execute again
+          try (PreparedStatement pstmt2 = conn.prepareStatement(insertSql, autoId ? Statement.RETURN_GENERATED_KEYS : Statement.NO_GENERATED_KEYS)) {
+            int idx2 = 1;
+            if (!autoId) pstmt2.setString(idx2++, patient.getPatientId());
+            pstmt2.setString(idx2++, patient.getFirstName());
+            pstmt2.setString(idx2++, patient.getLastName());
+            pstmt2.setString(idx2++, patient.getDateOfBirth());
+            pstmt2.setString(idx2++, patient.getPhone());
+            pstmt2.setString(idx2++, patient.getEmail());
+            if (hasGender) pstmt2.setString(idx2++, patient.getGender());
+            if (hasInsurance) {
+              pstmt2.setString(idx2++, patient.getInsuranceProvider());
+            }
+            if (hasEmergencyName) {
+              pstmt2.setString(idx2++, patient.getEmergencyContactName());
+            }
+            if (hasEmergencyPhone) {
+              pstmt2.setString(idx2++, patient.getEmergencyContactPhone());
+            }
+            pstmt2.executeUpdate();
+            if (autoId) {
+              try (ResultSet keys = pstmt2.getGeneratedKeys()) {
+                if (keys.next()) {
+                  long generated = keys.getLong(1);
+                  String assigned = "P" + generated;
+                  patient.patientIdProperty().set(assigned);
+                }
+              }
+            }
+            return;
+          }
+        }
+        throw ex;
+      }
+
+    } catch (SQLException ex) {
+      // fallback to old behaviour: generate our own id and retry
+      if (!idProvided) {
+        String gen = generatePatientId();
+        patient.patientIdProperty().set(gen);
+        addPatientToDb(patient);
+        return;
+      }
+      throw ex;
     }
   }
 
   public void addPatientToLists(Patient patient) {
     patientList.add(patient);
     filteredList.add(patient);
+  }
+
+  // Public wrapper for ID generation (still available if DB doesn't auto-generate)
+  public String generatePatientIdPublic() throws SQLException {
+    return generatePatientId();
+  }
+
+  // Detects whether the patient_id column is auto-incrementing
+  private boolean isPatientIdAutoIncrement(Connection conn) throws SQLException {
+    DatabaseMetaData meta = conn.getMetaData();
+    try (ResultSet cols = meta.getColumns(conn.getCatalog(), null, "patients", "patient_id")) {
+      if (cols.next()) {
+        String autoinc = cols.getString("IS_AUTOINCREMENT");
+        return "YES".equalsIgnoreCase(autoinc);
+      }
+    }
+    return false;
+  }
+
+  // Detects whether the patients table has insurance_provider column
+  private boolean hasInsuranceColumn(Connection conn) throws SQLException {
+    DatabaseMetaData meta = conn.getMetaData();
+    try (ResultSet cols = meta.getColumns(conn.getCatalog(), null, "patients", "insurance_provider")) {
+      return cols.next();
+    }
+  }
+
+  private boolean hasGenderColumn(Connection conn) throws SQLException {
+    DatabaseMetaData meta = conn.getMetaData();
+    try (ResultSet cols = meta.getColumns(conn.getCatalog(), null, "patients", "gender")) {
+      return cols.next();
+    }
+  }
+
+  /**
+   * Generic helper to detect whether a given column exists in patients table.
+   */
+  private boolean hasColumn(Connection conn, String columnName) throws SQLException {
+    DatabaseMetaData meta = conn.getMetaData();
+    try (ResultSet cols = meta.getColumns(conn.getCatalog(), null, "patients", columnName)) {
+      return cols.next();
+    }
+  }
+
+  // Generates next patient ID based on existing ones in the database.
+  private String generatePatientId() throws SQLException {
+    String query = "SELECT patient_id FROM patients ORDER BY CAST(SUBSTRING(patient_id, 2) AS UNSIGNED) DESC LIMIT 1";
+    try (Connection conn = DatabaseConnection.getConnection();
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(query)) {
+      if (rs.next()) {
+        String lastId = rs.getString("patient_id");
+        int num = Integer.parseInt(lastId.substring(1)) + 1;
+        // produce compact ID without zero padding, to fit small column definitions
+        return "P" + num;
+      } else {
+        return "P1";
+      }
+    }
   }
 
 }

@@ -290,7 +290,7 @@ public class AppointmentController implements Initializable {
   }
 
   private String generateAppointmentId() throws SQLException {
-    String query = "SELECT appointment_id FROM appointments ORDER BY appointment_id DESC LIMIT 1";
+    String query = "SELECT appointment_id FROM appointments ORDER BY CAST(SUBSTRING(appointment_id, 4) AS UNSIGNED) DESC LIMIT 1";
 
     try (Connection conn = DatabaseConnection.getConnection();
         Statement stmt = conn.createStatement();

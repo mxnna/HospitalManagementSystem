@@ -97,11 +97,22 @@ public class AddDoctorDialogController implements Initializable {
                     // Get department ID
                     int departmentId = getDepartmentId(conn, department);
 
-                    String sql = "INSERT INTO doctors (full_name, email, phone, license_number, specialization, department_id, qualification, experience, status) " +
-                                "VALUES ('" + fullName + "', '" + email + "', '" + phone + "', '" + license + "', '" + specialization + "', " + departmentId + ", '" + qualification + "', " + experience + ", '" + status + "')";
+                    // First, create a user record
+                    String userId = generateUserId(conn);
+                    String userSql = "INSERT INTO users (user_id, username, password, role, full_name, contact_number, email, is_active) " +
+                                    "VALUES ('" + userId + "', '" + email + "', 'password123', 'doctor', '" + fullName.replace("'", "\\'") + "', '" + phone + "', '" + email + "', 1)";
                     
                     Statement st = conn.createStatement();
-                    st.executeUpdate(sql);
+                    st.executeUpdate(userSql);
+                    st.close();
+                    
+                    // Now create the doctor record
+                    String doctorId = generateDoctorId(conn);
+                    String doctorSql = "INSERT INTO doctors (doctor_id, user_id, department_id, license_number, qualifications, years_of_experience, consultation_fee, status) " +
+                                      "VALUES ('" + doctorId + "', '" + userId + "', " + departmentId + ", '" + license + "', '" + qualification.replace("'", "\\'") + "', " + experience + ", 0, '" + status + "')";
+                    
+                    st = conn.createStatement();
+                    st.executeUpdate(doctorSql);
                     st.close();
                     
                     System.out.println("[AddDoctorDialog] Doctor added successfully");
@@ -162,6 +173,42 @@ public class AddDoctorDialogController implements Initializable {
             System.err.println("[AddDoctorDialog] Error getting department ID: " + ex.getMessage());
         }
         return 1; // Default department ID
+    }
+
+    private String generateUserId(Connection conn) {
+        try {
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT MAX(CAST(SUBSTRING(user_id, 2) AS UNSIGNED)) as max_id FROM users WHERE user_id LIKE 'U%'");
+            if (rs.next()) {
+                int maxId = rs.getInt("max_id");
+                rs.close();
+                st.close();
+                return "U" + (maxId + 1);
+            }
+            rs.close();
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("[AddDoctorDialog] Error generating user ID: " + ex.getMessage());
+        }
+        return "U1";
+    }
+
+    private String generateDoctorId(Connection conn) {
+        try {
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery("SELECT MAX(CAST(SUBSTRING(doctor_id, 2) AS UNSIGNED)) as max_id FROM doctors WHERE doctor_id LIKE 'D%'");
+            if (rs.next()) {
+                int maxId = rs.getInt("max_id");
+                rs.close();
+                st.close();
+                return "D" + (maxId + 1);
+            }
+            rs.close();
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("[AddDoctorDialog] Error generating doctor ID: " + ex.getMessage());
+        }
+        return "D1";
     }
 
     private void showError(String message) {

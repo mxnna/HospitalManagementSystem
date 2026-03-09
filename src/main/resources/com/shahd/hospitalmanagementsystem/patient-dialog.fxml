@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
@@ -38,6 +39,17 @@
             <DatePicker fx:id="dobPicker" promptText="mm/dd/yyyy" styleClass="form-field" />
         </VBox>
         <VBox spacing="6" HBox.hgrow="ALWAYS">
+            <Label styleClass="field-label" text="Gender" />
+            <ComboBox fx:id="genderField" promptText="Select gender" styleClass="form-field">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Male" />
+                        <String fx:value="Female" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+        </VBox>
+        <VBox spacing="6" HBox.hgrow="ALWAYS">
             <Label styleClass="field-label" text="Phone Number" />
             <TextField fx:id="phoneField" promptText="(555) 123-4567" styleClass="form-field" />
         </VBox>
@@ -50,7 +62,17 @@
 
     <VBox spacing="6">
         <Label styleClass="field-label" text="Insurance Provider" />
-        <TextField fx:id="insuranceField" promptText="Insurance company name" styleClass="form-field" />
+        <ComboBox fx:id="insuranceField" promptText="Select provider" styleClass="form-field">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Self-pay" />
+                    <String fx:value="Medicare" />
+                    <String fx:value="Medicaid" />
+                    <String fx:value="Bupa" />
+                    <String fx:value="Other" />
+                </FXCollections>
+            </items>
+        </ComboBox>
     </VBox>
 
     <VBox spacing="6">

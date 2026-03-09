@@ -23,12 +23,13 @@ public class Patient {
   private StringProperty insuranceProvider;
   private StringProperty emergencyContactName;
   private StringProperty emergencyContactPhone;
+  private StringProperty gender;
   private StringProperty lastVisit;
 
   public Patient(String patientId, String firstName, String lastName,
       String dateOfBirth, String phone, String email,
       String insuranceProvider, String emergencyContactName,
-      String emergencyContactPhone, String lastVisit) {
+      String emergencyContactPhone, String gender, String lastVisit) {
     this.patientId = new SimpleStringProperty(patientId);
     this.firstName = new SimpleStringProperty(firstName);
     this.lastName = new SimpleStringProperty(lastName);
@@ -38,6 +39,7 @@ public class Patient {
     this.insuranceProvider = new SimpleStringProperty(insuranceProvider);
     this.emergencyContactName = new SimpleStringProperty(emergencyContactName);
     this.emergencyContactPhone = new SimpleStringProperty(emergencyContactPhone);
+    this.gender = new SimpleStringProperty(gender == null ? "" : gender);
     this.lastVisit = new SimpleStringProperty(lastVisit == null ? "" : lastVisit);
   }
 
@@ -77,6 +79,10 @@ public class Patient {
     return emergencyContactPhone.get();
   }
 
+  public String getGender() {
+    return gender.get();
+  }
+
   public String getLastVisit() {
     return lastVisit.get();
   }
@@ -108,10 +114,13 @@ public class Patient {
     return phone;
   }
 
+  public StringProperty genderProperty() {
+    return gender;
+  }
+
   public StringProperty lastVisitProperty() {
     return lastVisit;
   }
-
   public StringProperty emailProperty() {
     return email;
   }

@@ -16,7 +16,8 @@ public class PatientDialogController implements Initializable {
     @FXML private DatePicker dobPicker;
     @FXML private TextField phoneField;
     @FXML private TextField emailField;
-    @FXML private TextField insuranceField;
+    @FXML private ComboBox<String> insuranceField;
+    @FXML private ComboBox<String> genderField;
     @FXML private TextField emergencyField;
     @FXML private Button closeBtn;
 
@@ -44,8 +45,14 @@ public class PatientDialogController implements Initializable {
             return;
         }
 
-        String newId = "P" + System.currentTimeMillis();
-        String dob = dobPicker.getValue() != null ? dobPicker.getValue().format(DateTimeFormatter.ofPattern("M/d/yyyy")) : "";
+        // do not assign ID manually; let database or controller handle it
+        String newId = "";
+        // use ISO date (yyyy-MM-dd) for database compatibility
+        String dob = "";
+        if (dobPicker.getValue() != null) {
+            dob = dobPicker.getValue().toString();
+        }
+        String gender = genderField.getValue() != null ? genderField.getValue() : "";
 
         com.shahd.models.Patient newPatient = new com.shahd.models.Patient(
             newId,
@@ -54,9 +61,10 @@ public class PatientDialogController implements Initializable {
             dob,
             phoneField.getText().trim(),
             emailField.getText().trim(),
-            insuranceField.getText().trim(),
+            insuranceField.getValue() != null ? insuranceField.getValue().trim() : "",
             emergencyField.getText().trim(),
-            "",
+            "", // no separate phone available
+            gender,
             java.time.LocalDate.now().format(DateTimeFormatter.ofPattern("M/d/yyyy"))
         );
 
